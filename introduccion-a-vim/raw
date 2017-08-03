@@ -1,0 +1,241 @@
+
+                              #
+                         ////###  ///
+                          ///####  //
+                          ///#####//
+                          ///####//
+                         #///###//##
+                        ##///##//####
+                         #///#//####
+                          /////####
+                          ////####
+                          ///####
+                          // ###
+                              #
+
+                   #    #     #      #    #
+                   #    #     #      ##  ##
+                   #    #     #      # ## #
+                   #    #     #      #    #
+                    #  #      #      #    #
+                     ##       #      #    #
+
+                 ##     ##   #       #   ###   #
+                 #  #  #  #  #       #  #   #  #
+                 # #  #    #  #  #  #   #   #  #
+                 #     #  #    ## ##    #####
+                 #      ##     #   #    #   #  #
+
+               2011-Febrero-24 - http://enli.org.mx
+                          @chilicuil
+
+
+
+
+
+
+
+
+ ______________________________________________________________________________
+|              |
+| 1.-          |  Para los que dormiran el resto de la sesión ~O~
+|______________|
+
+
+^C^C^X^X^X^Xquitclose[esc]qawawawr­ dfghjkl;:X#$$#$#31234escesc
+
+                   .-----------------------------.
+                   |:wq   ----> Guardar y salir  |
+                   |:q!   ----> Forzar la salida |
+                   -----------------------------´
+
+:h any_topic
+    Ctrl-] => ir hacia
+    Ctrl-T => regresar
+$ vimtutor es
+
+
+
+ ______________________________________________________________________________
+|              |
+| 2.-          |  Razones (www.moolenaar.net/habits.html)
+|______________|
+
+En Debian/Ubuntu
+
+    $ sudo apt-get install vim-gnome #7.2
+    $ sudo apt-get install vim-nox
+
+https://launchpad.net/~passy/+archive/vim  #7.3
+En natty estará por defecto
+
++ Si estas aquí, es porque probablemente pasas mucho tiempo frente a una
+  computadora, dejando de lado, twitter, facebook, youtube, msn, irc?, uno de los
+  programas que más usas es un editor de texto.
+
++ Vi(m) es semi-estandard  ... me han dicho (vimperator, evince, readline, etc.)
+
++ 'ligero' y personalizable 100%
+
++ Es dificil, un reto, por el puro antojo, como big cola
+
++ No es emacs ;)
+
+ ______________________________________________________________________________
+|              |
+| 3.-          |  Básicos
+|______________|
+
+$ cat $HOME/.vimrc | head
+     set nocompatible
+     syntax on
+     filetype plugin indent on
+     set backspace=indent,eol,start
+     setlocal omnifunc=syntaxcomplete#Complete
+     set expandtab
+     set incsearch
+     set cursorline
+     set clipboard=unnamedplus
+     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")|execute("normal `\"")|endif
+
+
+ ______________________________________________________________________________
+|              |
+| 4.-          |  Modos
+|______________|
+
+Normal, miticos hjkl, yy, dd, C, }... !!
+Ex :split presentacion_vim.txt
+Insert, que se activa cuando presionas i, I, a, A, o, O... <esc>
+Visual v, V, ctrl-v
+Busqueda /, ?, % (matchit), *, #
+Reemplazar :%s/patron/reemplazar/g
+    & => repite sobre una linea
+
+ ______________________________________________________________________________
+|              |
+| 5.-          | Mapeos
+|______________|
+
+inoremap jj <Esc>
+    noremap
+    vnoremap
+
+let mapleader = ","
+
+- Macros
+
+qw^wwi<EscA>qEscjq
+@w
+2@w
+
+#include stdio.h
+#include stdlib.h
+#include math.h
+
+ ______________________________________________________________________________
+|              |
+| 6.-          | Objetos, marcas, historial
+|______________|
+
+>> objetos
+    ci", da', ca{, di'a, d/?, v3ip
+
+>> marcas
+    marcas ma, 'a, `a, '', gi,  :markS
+
+>> historial
+    u, Ctrl-R
+    undo-tree
+
+ ______________________________________________________________________________
+|              |
+| 7.-          | Edición, compilación, depuración
+|______________|
+
+:split
+:vsplit
+:diffthis
+:tabnew
+:make %:r
+        set makeprg =LANGUAGE=en\ CFLAGS='-g\ -Wall'\ make\ %:r
+        set makeprg =javac\ %
+        set makeprg =$VIMRUNTIME/tools/efm_perl.pl\ -c\ %\ $*
+:! gcc
+ ______________________________________________________________________________
+|              |
+| 8.-          | Plugins
+|______________|
+
+http://www.vim.org/scripts/index.php
+
+                              Instalación
+              ----------------------------------------------------
+              vim *.vba           | |      copiar a $HOME/.vim/plugin
+              so %                | |      :heltags $HOME/.vim/doc
+              ----------------------------------------------------
+
+Algunos plugins que uso:
+
+histwinPlugin nibble twitter mpd snipMate cctree (cscope), ctags nerdtree
+unimpaired tasklist commant-t vimball acp dext align fugitive matchit netrw
+nerdtree nerdcommenter gist qbuf securemodelines snipMate surround vcs rails
+
+ ______________________________________________________________________________
+|              |
+| 9.-          | snipMate, acp, gist
+|______________|
+
+1.c
+1.html
+1.php
+
+https://github.com/scrooloose/snipmate-snippets
+
+ ______________________________________________________________________________
+|              |
+| 10.-         | ctags, nerdtree, nerdcommenter
+|______________|
+
+$ sudo apt-get install ctags-exuberant
+
+<Leader>l
+<Leader>n
+<Leader>cs
+
+ ______________________________________________________________________________
+|              |
+| 11.-         | twitter, nibble, matrix
+|______________|
+
+:FriendsTwitter
+:PublicTwitter
+:PosttoTwitter
+:Nibble
+:Matrix
+<Leader>te
+
+ ______________________________________________________________________________
+|              |
+| 12.-         | Links
+|______________|
+
+http://vimcasts.org
+http://got-ravings.blogspot.com
+https://github.com/chilicuil/dotfiles/tree/master/.vim
+
+
+
+
+
+                ¿P r e g u n t a s?
+
+
+  __
+ /  \           _________________________
+ |  | ° o O   /                          \
+ @  @        |  :wq!                      |
+ || ||       |                            |
+ || ||       |                            |
+ |\_/|        \__________________________/
+ \___/

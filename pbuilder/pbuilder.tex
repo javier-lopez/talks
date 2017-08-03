@@ -1,0 +1,348 @@
+%\documentclass[svgnames]{beamer}
+\documentclass[dvipsnames]{beamer}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages}
+\usepackage{alltt}
+\usepackage{verbatim}
+\usepackage{hyperref}
+
+\mode<presentation>
+{
+  \usetheme{Darmstadt}
+  %\usetheme{Antibes}
+  \usecolortheme[named=black]{structure} 
+  \usecolortheme{whale}
+  \usecolortheme{default}
+  %\setbeamercovered{transparent}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------CONTENT---------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Pbuilder} 
+
+\author[Javier López]{Javier López - @chilicuil}
+
+\institute[Testing Classroom Saucy]
+{\url{https://wiki.ubuntu.com/Testing/Activities/Classroom/Saucy}}
+
+\date[2013]
+     {28th June - Testing Classroom Saucy}
+
+%require an .ps file ($ convert ubuntu.png ubuntu.ps)
+\pgfdeclareimage[height=.5cm]{ubuntu-logo}{imgs/ubuntu}
+\pgfdeclareimage[height=3.5cm]{crowd}{imgs/crowd}
+\pgfdeclareimage[height=3.5cm]{author}{imgs/author}
+
+%pixl inder font
+%pixl express -> effect -> default -> Anne
+\pgfdeclareimage[height=1cm]{pbuilder_box}{imgs/pbuilder_box}
+\pgfdeclareimage[width=10cm]{pbuilder_1}{imgs/pbuilder_1}
+\pgfdeclareimage[width=10cm]{pbuilder_2}{imgs/pbuilder_2}
+\pgfdeclareimage[width=10cm]{pbuilder_3}{imgs/pbuilder_3}
+\pgfdeclareimage[width=10cm]{pbuilder_4}{imgs/pbuilder_4}
+\pgfdeclareimage[width=10cm]{pbuilder_5}{imgs/pbuilder_5}
+\pgfdeclareimage[width=10cm]{pbuilder_6}{imgs/pbuilder_6}
+\pgfdeclareimage[width=10cm]{pbuilder_7}{imgs/pbuilder_7}
+\pgfdeclareimage[width=10cm]{pbuilder_8}{imgs/pbuilder_8}
+\pgfdeclareimage[width=10cm]{pbuilder_9}{imgs/pbuilder_9}
+\pgfdeclareimage[width=10cm]{pbuilder_10}{imgs/pbuilder_10}
+\pgfdeclareimage[width=10cm]{pbuilder_11}{imgs/pbuilder_11}
+\pgfdeclareimage[width=10cm]{pbuilder_12}{imgs/pbuilder_12}
+\pgfdeclareimage[width=10cm]{pbuilder_13}{imgs/pbuilder_13}
+\pgfdeclareimage[width=10cm]{pbuilder_14}{imgs/pbuilder_14}
+\pgfdeclareimage[width=10cm]{pbuilder_15}{imgs/pbuilder_15}
+\pgfdeclareimage[width=10cm]{pbuilder_16}{imgs/pbuilder_16}
+\pgfdeclareimage[width=10cm]{pbuilder_17}{imgs/pbuilder_17}
+
+\logo{\pgfuseimage{ubuntu-logo}}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Index}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+%\beamerdefaultoverlayspecification{<+->}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[About]{About}
+\begin{frame}
+  \frametitle{Pbuilder as a Debian-Ubuntu Building dev system}
+  %\begin{center}
+        \pgfuseimage{crowd}
+        \pgfuseimage{author}
+  %\end{center}
+  \begin{center}
+    {Unichi Uekawa -}
+    \url{http://tinyurl.com/pbuilder}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Alternatives}
+  \begin{itemize}
+  \item pbuilder-dist
+  \item pbuild
+  \item sbuild
+  \item cowbuilder
+  \item qemubuilder
+  \item git-builder
+  \item ...
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Installation]{Pbuilder setup}
+
+\begin{frame}[fragile]
+  \frametitle {apt-get mooo}
+  %\begin{center}
+  %      \pgfuseimage{pbuilder_box}
+  %\end{center}
+  
+  \begin{center}
+      \pgfuseimage{pbuilder_1}
+      {\vspace{3 mm}}
+      \pgfuseimage{pbuilder_2}
+  \end{center}
+
+\begin{verbatim}
+   /.
+   /usr
+   /usr/bin
+   /usr/bin/debuild-pbuilder
+   /usr/bin/pdebuild
+   ...
+\end{verbatim}
+  \begin{center}
+        Bash wrappers for chroot, debootstrap, dpkg-source, etc
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{conf}
+  \begin{center}
+        \pgfuseimage{pbuilder_3}
+  \end{center}
+\begin{verbatim}
+   export DEBEMAIL="adam@domain.com"
+   export DEBFULLNAME="Adam Smith"
+   export GPGKEY=BC9C8902
+\end{verbatim}
+  \begin{center}
+      {My full configuration -}
+      \url{http://git.io/ONwNiA}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{conf}
+  \begin{center}
+      \pgfuseimage{pbuilder_4}
+  \end{center}
+  \begin{verbatim}
+   UBUNTU_SUITES=("raring" "quantal" "precise")
+   UBUNTU_MIRROR="us.archive.ubuntu.com"
+   PATH_PBUILDER="/var/cache/pbuilder"
+   NAME="$DIST"
+   BASETGZ="$PATH_PBUILDER/$NAME/$NAME-base.tgz"
+   HOOKDIR="$HOME/.pbuilder-hooks/"
+   ...
+  \end{verbatim}
+  \begin{center}
+      {My full configuration -}
+      \url{http://git.io/hluthA}
+  \end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Usage]{Pbuilder Usage}
+
+\begin{frame}[fragile]
+  \frametitle{usage}
+  \begin{center}
+        \pgfuseimage{pbuilder_5}
+  \end{center}
+  \begin{verbatim}
+   I: Building the build Environment
+   I: extracting base tarball [/var/cache/pbuilder
+   /saucy-amd64/saucy-amd64-base.tgz]
+   E: failed to find /var/cache/pbuilder/saucy-amd64
+   /saucy-amd64-base.tgz, have you done <pbuilder 
+   create> to create your base tarball yet?
+  \end{verbatim}
+  
+  \begin{center}
+        \pgfuseimage{pbuilder_6}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{use the source Luke}
+  \begin{center}
+        \pgfuseimage{pbuilder_7}
+        {\vspace{3 mm}}
+        \pgfuseimage{pbuilder_8}
+        {\vspace{3 mm}}
+        \pgfuseimage{pbuilder_9}
+  \end{center}
+  \begin{center}
+      {Download and create a deb source (.dsc).}
+      {\vspace{0.5 mm}}
+      {Helpul to check if our pbuilder setup works}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{building in a pristine env}
+  \begin{center}
+        \pgfuseimage{pbuilder_10}
+  \end{center}
+  \begin{verbatim}
+   I: using fakeroot in build.
+   I: Current time: Thu Jun 27 11:01:00 CDT 2013
+   I: pbuilder-time-stamp: 1372348860
+   ...
+  \end{verbatim}
+  \begin{center}
+  Result will be copied by default to: \textbf{/var/cache/pbuilder/results/saucy-amd64/}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{results}
+  \begin{center}
+        \pgfuseimage{pbuilder_11}
+  \end{center}
+  \begin{verbatim}
+  hello_2.8-3.debian.tar.gz  hello_2.8-3_i386.changes
+  hello_2.8.orig.tar.gz hello_2.8-3.dsc
+  hello_2.8-3_i386.deb lintian
+  \end{verbatim}
+  \begin{center}
+      \url{hello_2.8-3_i386.deb}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Pbuilder for testing}
+  \begin{center}
+        \pgfuseimage{pbuilder_12}
+  \end{center}
+  \begin{itemize}
+  \item Packaging work (pkg bugfixes, backports, etc)
+  \item SRU testing
+  \item Testing of several ubuntu releases
+  \item General sandbox
+  \item After exit, it deletes all changes
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[TT]{Tips 'n Tricks}
+\begin{frame}[fragile]
+  \frametitle{Update your pbuilder env often | Use aliases}
+  \begin{center}
+        \pgfuseimage{pbuilder_13}
+  \end{center}
+  \begin{verbatim}
+  0 23 * * * DIST=saucy ARCH=i386 pbuilder update
+  0 23 * * * DIST=saucy ARCH=i386 pbuilder update
+  \end{verbatim}
+  \begin{center}
+        \pgfuseimage{pbuilder_14}
+  \end{center}
+  \begin{verbatim}
+  ='sudo DIST=raring ARCH=amd64 pbuilder'
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Speeding up}
+  \begin{center}
+  {fast dependecy resolution}
+  \end{center}
+  \begin{center}
+        \pgfuseimage{pbuilder_15}
+  \end{center}
+  \begin{verbatim}
+  PBUILDERSATISFYDEPENDSCMD=
+  "/usr/lib/pbuilder/pbuilder-satisfydepends-gdebi"
+  \end{verbatim}
+  \begin{center}
+  {tmpfs env, fast io}
+  \end{center}
+  \begin{center}
+        \pgfuseimage{pbuilder_16}
+  \end{center}
+  \begin{verbatim}
+  tmpfs ../saucy-amd64/build/ tmpfs defaults,size=1024M
+  tmpfs ../saucy-i386/build/ tmpfs defaults,size=1024M
+  \end{verbatim}
+\end{frame}
+
+begin{frame}[fragile]
+  \frametitle{Speeding up}
+  \begin{center}
+  {reuse of }
+  \end{center}
+  \begin{center}
+        \pgfuseimage{pbuilder_17}
+  \end{center}
+  \begin{verbatim}
+  PBUILDERSATISFYDEPENDSCMD=
+  "/usr/lib/pbuilder/pbuilder-satisfydepends-gdebi"
+  \end{verbatim}
+  \begin{center}
+  {tmpfs env, fast io}
+  \end{center}
+  \begin{center}
+        \pgfuseimage{pbuilder_17}
+  \end{center}
+  \begin{verbatim}
+  tmpfs ../saucy-amd64/build/ tmpfs defaults,size=1024M
+  tmpfs ../saucy-i386/build/ tmpfs defaults,size=1024M
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}
+  \frametitle {Help}
+  \begin{itemize}
+  \item \url{http://tinyurl.com/pbuilder}
+  \item \url{https://wiki.ubuntu.com/PbuilderHowto}
+  \item \#ubuntu-quality, \#ubuntu-motu freenode.net
+  \item nicolas.skaggs@canonical.com
+  \item me ;)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle {¡Thank you!}
+  \begin{center}
+      {\huge Questions? o@o?}
+  \end{center}
+  \begin{center}
+      {Javier López - chilicuil@ubuntu.com}
+  \end{center}
+  \begin{center}
+      {@chilicuil - \#ubuntu-quality}
+  \end{center}
+\end{frame}
+\end{document}
+
+%%
+%% Referencias:
+%%
+%% http://google.com

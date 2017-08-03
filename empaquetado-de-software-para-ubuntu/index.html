@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <!--This one seems to work all the time, but really small on ipad-->
+    <!--<meta name="viewport" content="initial-scale=0.4">-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" media="all" href="theme/css/default.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+    <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+    <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+  </head>
+  <body style="opacity: 0">
+
+  <slides class="layout-widescreen">
+
+    <slide class="logoslide nobackground">
+      <article class="flexbox vcenter">
+        <span><img src="images/telmex-hub.png"></span>
+      </article>
+    </slide>
+
+    <slide class="title-slide segue nobackground">
+      <aside class="gdbar"><img src="images/ubuntu-icon-128.png"></aside>
+      <hgroup class="auto-fadein">
+        <h1 data-config-title><!-- populated from slide_config.json --></h1>
+        <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+        <p data-config-presenter><!-- populated from slide_config.json --></p>
+      </hgroup>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Sobre esta presentación</h2>
+      </hgroup>
+      <article>
+        <ul class="build">
+          <li><b>Objetivo</b>: Crear paquetes <b>.deb</b> para su consumo en sistemas <b>Ubuntu</b></li>
+          <ul>
+            <li>Ventajas</li>
+            <li>Limitantes</li>
+            <li>Empaquetado manual</li>
+            <li>Empaquetado con programas auxiliares; checkinstall, fpm</li>
+            <li>Distribución propia; manual, apt-ftparchive</li>
+            <li>Empaquetado formal: paquetes fuente (dsc)</li>
+            <li>Repositorios personales diarios (PPA)</li>
+            <li>Alternativas</li>
+          </ul>
+          <li>Lo que no se discutirá:</li>
+          <ul>
+            <li>Como enviar paquetes a Ubuntu</li>
+            <li>Como convertirse en mantenedor (empaquetador) oficial</li>
+          </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Ventajas</h2>
+      </hgroup><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Resolución de dependencias</li>
+          <li>Verificación de datos a través de firmas digitales y comparación de hashes</li>
+          <li>Soporte de actualizaciones</li>
+          <li>Métodos de distribución (al menos en sistemas Ubuntu/Debian)</li>
+          <li>Herramientas disponibles: dpkg, apt-get, apt-ftparchive, puppet, chef, etc</li>
+        </ul>
+        <p style="font-size:400%" align="center">=)</h1>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Limitantes</h2>
+      </hgroup><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Los paquetes .deb sólo funcionan en sistemas Ubuntu/Debian y derivados</li>
+          <li>Sólo los administradores pueden instalarlos</li>
+          <li>No se pueden empaquetar fácilmente múltiples versiones del mismo programa</li>
+          <li>Las actualizaciones son destructivas y el estado inconsistente entre ellas</li>
+          <li>Las actualizaciones contienen información redundante</li>
+          <li>No se puede reconstruir la lógica del empaquetado a partir del paquete final</li>
+        </ul>
+        <p style="font-size:400%" align="center">=(</h1>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado manual: panorama general</h2>
+      </hgroup><br><br><br><br>
+      <article class="build">
+      <span class="centered">
+        <a href="http://www.iana.org/assignments/media-types/application/vnd.debian.binary-package" style="color: white;text-decorations:none;" ><img src="images/empaquetado-manual-panorama.png" alt="" title=""></a>
+      </span>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado manual: contenedores ar</h2>
+      </hgroup><br><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Los archivos .deb son contenedores ar con 3 <a href="http://www.iana.org/assignments/media-types/application/vnd.debian.binary-package">componentes</a>:</li>
+          <ul>
+            <li><b>debian-binary</b>:  versión del paquete ("2.0\n")</li>
+            <li><b>control.tar.gz</b>: metadatos; nombre, dependencias, scripts de mantenedores, etc</li>
+            <li><b>data.tar.gz</b>:    archivos del programa</li>
+          </ul>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg; mkdir pkg
+ $ (cd pkg && wget <a href="http://people.ubuntu.com/~chilicuil/d/bash-completion_2.1-4_all.deb">http://people.ubuntu.com/~chilicuil/d/bash-completion_2.1-4_all.deb</a>)
+ $ (cd pkg && ar xv bash-completion_2.1-4_all.deb)
+ bash-completion_2.1-4_all.deb
+ x - debian-binary
+ x - control.tar.gz
+ x - data.tar.xz
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado manual: procedimiento</h2>
+      </hgroup>
+      <article class="build">
+        <p>Los componentes pueden generarse individualmente</p>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg; mkdir pkg
+ $ (cd pkg && echo "2.0" > <a href="http://www.iana.org/assignments/media-types/application/vnd.debian.binary-package">debian-binary</a>) #primer componente
+ $ (cd pkg && wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a> -P usr/bin)
+ $ (cd pkg && tar czf data.tar.gz usr) #segundo
+ $ (cd pkg && cat > <a href="https://www.debian.org/doc/debian-policy/ch-controlfields.html">control</a> &lt;&lt;END
+Package: trash-pkg
+Maintainer: Javier Lopez &lt;m@javier.io&gt;
+Priority: optional
+Architecture: all
+Installed-Size: $(du -ks usr|cut -f 1)
+Version: 0.1
+Description: Rm wrapper around the trash freedesktop specification.
+END
+)
+ $ (cd pkg && tar czf control.tar.gz control) #tercero
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado manual: procedimiento</h2>
+      </hgroup>
+      <article class="build">
+        <p>Ar genera el paquete, en este exacto orden:</p>
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg && ar -r trash-pkg_0.1_all.deb debian-binary control.tar.gz data.tar.gz)
+        </pre>
+        <p>A tener en cuenta:
+        <ul>
+          <li>El campo <b>Installed-Size</b> debe listar el espacio de todos los archivos empaquetados (sin contar los archivos de metadatos)</li>
+          <li>Por lo menos se require el archivo <b>control</b> pero también se pueden agregar scripts de "mantenedor": <a href="https://wiki.debian.org/MaintainerScripts">https://wiki.debian.org/MaintainerScripts</a></li>
+          <li>El archivo <b>control</b> require por lo menos 6 campos (los descritos en la plantilla anterior), pero se pueden definir más: <a href="https://www.debian.org/doc/debian-policy/ch-controlfields.html">https://www.debian.org/doc/debian-policy/ch-controlfields.html</a></li>
+          <li><b>dpkg-deb</b> es un envolvedor de este procedimiento: <a href="http://www.sj-vs.net/creating-a-simple-debian-deb-package-based-on-a-directory-structure/">http://www.sj-vs.net/creating-a-simple-debian-deb-package-based-on-a-directory-structure/</a></li>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado manual: balance</h2>
+      </hgroup>
+      <article><br><br><br>
+        <ul class="build">
+          <li>Ventajas</li>
+          <ul>
+            <li>Fácil</li>
+            <li>Rápido</li>
+            <li>No se necesita acceso a un sistema Ubuntu/Debian para crear paquetes</li>
+          </ul>
+          <li>Desventajas</li>
+          <ul>
+            <li>Poca documentación (no se supone que se empaquete así)</li>
+            <li>Imposibilidad de subir el resultado a un PPA (requiere almacenamiento propio, apt-ftparchive)</li>
+          </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado con checkinstall: panorama general</h2>
+      </hgroup>
+      <article class="build">
+      <span class="centered">
+        <a href="http://asic-linux.com.mx/~izto/checkinstall/docs/README" style="color: white;text-decorations:none;" ><img src="images/empaquetado-checkinstall-panorama.png" alt="" title=""></a>
+      </span>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado con checkinstall: procedimiento</h2>
+      </hgroup><br><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Si existe un procedimiento <b>estándar</b> para instalar software en Unix, probablemente es <b>./configure && make && make install</b></li>
+          <li>Desafortunadamente, con frecuencia <b>make uninstall</b> no se define. El software se puede instalar pero <b>no desinstalar</b>. Checkinstall es útil en esas circunstancias.</li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg; mkdir pkg
+ $ (cd pkg && wget <a href="http://nodejs.org/dist/v0.6.0/node-v0.6.0.tar.gz">http://nodejs.org/dist/v0.6.0/node-v0.6.0.tar.gz</a>)
+ $ (cd pkg && tar zxf node-v0.6.0.tar.gz && mv node-*/ nodejs)
+ $ (cd pkg/nodejs && ./configure)
+ $ (cd pkg/nodejs && make)
+ $ (cd pkg/nodejs && sudo checkinstall --fstrans=yes --install=no -D \
+   --pkgname=node-upstream-0.6.0 --pkgversion=0.6.0)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado con checkinstall: procedimiento</h2>
+      </hgroup><br><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Checkinstall puede crear paquetes a partir de cualquier comando que mueva archivos, no sólo <b>make install</b></li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg; mkdir pkg
+ $ (cd pkg && wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a>)
+ $ (cd pkg && echo "Rm wrapper around the trash freedesktop specification." \
+    &gt; description-pak)
+ $ (cd pkg && sudo checkinstall --fstrans=yes --install=no -D --pkgname=trash-pkg \
+    --maintainer="Javier Lopez \&lt;m@javier.io\&gt;" --pkgarch=all --pkgversion=0.1 \
+    --nodoc cp trash /usr/bin/)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado con checkinstall: balance</h2>
+      </hgroup>
+      <article><br><br>
+        <ul class="build">
+          <li>Ventajas</li>
+          <ul>
+            <li>Muy fácil</li>
+            <li>Rápido</li>
+            <li>Disponible en los repositorios oficiales</li>
+          </ul>
+          <li>Desventajas</li>
+          <ul>
+            <li>Falta de soporte (no se supone que se empaquete así)</li>
+            <li>No se puede copiar el resultado a un PPA (requiere almacenamiento propio, apt-ftparchive)</li>
+            <li>Depende de dpkg/dpkg-deb</li>
+            <li>Se ejecuta con permisos de super usuario (root)</li>
+          </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado con fpm: panorama general</h2>
+      </hgroup>
+      <article class="build">
+      <span class="centered">
+        <a href="https://github.com/jordansissel/fpm" style="color: white;text-decorations:none;" ><img src="images/empaquetado-fpm-panorama.png" alt="" title=""></a>
+      </span>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado con fpm: procedimiento</h2>
+      </hgroup><br><br>
+      <article class="build">
+        <ul>
+          <li>Fpm, permite migrar paquetes desde otros sistemas, modificar los existentes, y crear nuevos desde directorios y otros medios</li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ curl -sSL <a href="https://get.rvm.io">https://get.rvm.io</a> | \
+   sed "s/which gp/which xp/g" | $SHELL -s stable --ruby
+ $ sudo apt-get install gcc python-setuptools php-pear npm
+ $ . /home/admin/.rvm/scripts/rvm
+ $ gem install fpm && rm -rf pkg; mkdir pkg
+ $ (cd pkg && fpm -s gem -t deb fpm)
+ Created package {:path=>"rubygem-fpm_1.3.3_all.deb"}
+ $ (cd pkg && fpm -s python -t deb Django)
+ Created package {:path=>"python-django_1.7.4_all.deb"}
+ $ (cd pkg && fpm -s pear -t deb Mail_Mime)
+ Created package {:path=>"php-pear-mail-mime_1.8.9_amd64.deb"}
+ $ (cd pkg && fpm -s npm -t deb i3-style)
+ Created package {:path=>"node-i3-style_0.2.3_amd64.deb"}
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado con fpm: procedimiento</h2>
+      </hgroup><br><br><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Continuación</li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg; mkdir pkg
+ $ (cd pkg && wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a>)
+ $ (cd pkg && fpm -s dir -t deb \
+   --description "Rm wrapper around the trash freedesktop specification." \
+   --prefix /usr/bin -n trash-pkg -v 0.1 -a all trash)
+ Created package {:path=>"trash-pkg_0.1_all.deb"}
+ $ (cd pkg && fpm -s deb -t deb -f --edit trash-pkg_0.1_all.deb)
+ Editar el archivo control
+ Created package {:path=>"trash-pkg_0.1_amd64.deb"}
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado con fpm: balance</h2>
+      </hgroup>
+      <article><br><br>
+        <ul class="build">
+          <li>Ventajas</li>
+          <ul>
+            <li>Muy fácil</li>
+            <li>Rápido</li>
+            <li>Potente</li>
+            <li>Soporte de la comunidad fpm</li>
+            <li>No requiere dpkg/Ubuntu/Debian</li>
+          </ul>
+          <li>Desventajas</li>
+          <ul>
+            <li>Requiere versiones de ruby y gem recientes</li>
+            <li>No se puede copiar el resultado a un PPA (requiere almacenamiento propio, apt-ftparchive)</li>
+          </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Distribución propia: manual</h2>
+      </hgroup><br><br>
+      <article class="build">
+        <ul>
+          <li>Los métodos anteriores sólo generan archivos .deb. Para su distribución se requieren repositorios.</li>
+          <ul>
+            <li><code>dpkg -i paquete.deb</code>, no basta porque dpkg no resuelve dependencias</li>
+          </ul>
+        </ul>
+        <ul>
+          <li><b>dpkg-scanpackages</b></li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ dpkg-scanpackages pkg &gt; pkg/Packages
+ $ echo "deb file:~/pkg $(awk -F"=" '/CODENAME/ {print $2}' /etc/*release) main" | \
+   sudo tee /etc/apt/sources.list.d/repositorio.list
+ $ sudo apt-get update && sudo apt-get install trash-pkg
+ $ #desinstalación completa
+ $ sudo apt-get purge trash-pkg && sudo rm -rf /etc/apt/sources.list.d/repositorio.list
+ $ sudo apt-get update && sudo apt-get install trash-pkg
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Distribución propia: apt-ftparchive</h2>
+      </hgroup>
+      <article class="build">
+        <ul>
+        <li><b>apt-ftparchive</b></li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg/Packages && sudo apt-get purge trash-pkg
+ $ apt-ftparchive packages pkg &gt; pkg/Packages && gzip -9c pkg/Packages &gt; pkg/Packages.gz
+ $ apt-ftparchive contents pkg &gt; pkg/Contents && gzip -9c pkg/Contents &gt; pkg/Contents.gz
+ $ apt-ftparchive release  pkg &gt; pkg/Release  && gzip pkg/Release &gt; pkg/Release.gz
+ $ sudo kill -9 $(pgrep -f SimpleHTTPServer) 2>&1 >/dev/null
+ $ (cd pkg && sudo python -m SimpleHTTPServer 80)&
+ $ echo "deb http://$(curl ifconfig.pro) /" | \
+   tee /etc/apt/sources.list.d/repositorio.list
+ $ sudo apt-get update && sudo apt-get install trash-pkg
+ $ #desinstalación completa
+ $ sudo apt-get purge trash-pkg && sudo rm -rf /etc/apt/sources.list.d/repositorio.list
+ $ sudo apt-get update && sudo apt-get install trash-pkg
+ $ sudo kill -9 $(pgrep -f SimpleHTTPServer) 2>&1 >/dev/null
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Distribución propia: apt-ftparchive</h2>
+      </hgroup>
+      <article><br><br><br>
+        <ul>
+          <li>A tomar en cuenta:</li>
+        </ul>
+        <ul>
+          <li>Existen otras alternativas; <a href="https://wiki.debian.org/DakHowTo">dak</a>, <a href="http://www.hadrons.org/~guillem/debian/mini-dak/">mini-dak</a>, <a href="http://mirrorer.alioth.debian.org/">reprepo</a>, <a href="http://packages.debian.org/sid/mini-dinstall">mini-dinstall</a>, <a href="http://packages.debian.org/squeeze/debarchiver">debarchiver</a>, <a href="https://wiki.debian.org/debpool">debpool</a>, <a href="http://code.google.com/p/debmarshal/">debmarshal</a>, <a href="http://www.aptly.info/">aptly</a>, etc</li><br>
+          <ul>
+            <li>Tip: <a href="http://nytefyre.net/2013/03/creating-signed-debian-apt-repository/">incrontab</a> es útil cuando se quiere regenerar el repositorio cada vez que un paquete.deb sea copiado a <b>pkg/</b></li>
+            <li>Tip: Se puede <a href="http://nytefyre.net/2013/03/creating-signed-debian-apt-repository/">firmar</a> el archivo <b>Releases</b> con una llave gpg para autenticar los paquetes</li>
+          </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: panorama general</h2>
+      </hgroup>
+      <article class="build">
+      <span class="centered">
+        <a href="http://asic-linux.com.mx/~izto/checkinstall/docs/README" style="color: white;text-decorations:none;" ><img src="images/empaquetado-formal-panorama.png" alt="" title=""></a>
+      </span>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: debian/</h2>
+      </hgroup><br><br><br><br>
+      <article class="build">
+        <ul>
+          <li>El empaquetado formal requiere un directorio <b>debian/</b> con al menos 4 archivos:</li>
+          <ul>
+            <li><b>debian/changelog</b>: nombre, versión e historial del paquete fuente</li>
+            <li><b>debian/control</b>:   definición/descripción de los paquetes binarios</li>
+            <li><b>debian/rules</b>:     reglas para contruir/compilar el programa (Makefile)</li>
+            <li><b>debian/copyright</b>: listado de licencias del software</li>
+            <li><a href="http://packaging.ubuntu.com/html/debian-dir-overview.html">debian/{compat,watch,install,dirs,postinst,postrm}, etc.</a></li>
+          </ul>
+        </ul>
+        <ul>
+          <li>Las formas más comunes de generar tal directorio son:</li>
+          <ul>
+            <li>Con <b>dh_make</b> o programas similares</li>
+            <li>Copiando los directorios <b>debian/</b> de otros paquetes</li>
+          </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: origenes, auxiliares</h2>
+      </hgroup><br><br>
+      <article class="build">
+        <ul>
+          <li>El origen del software que se empaqueta se define en <b>debian/source/format</b></li>
+          <ul>
+            <li>Nativo (<b>3.0 native</b>): Para programas propios de las distribuciones, pero también se pueden usar para scripts, configuraciones o datos que no tengan su propio medio de distribución</li>
+            <li>Externo (<b>3.0 quilt</b>): Para programas distribuidos en contenedores (tar, zip, etc)</li>
+          </ul>
+        </ul>
+        <ul>
+          <li>Auxiliares</li>
+          <ul>
+            <li><a href="http://build-common.alioth.debian.org/cdbs-doc.html">CDBS</a>: fragmentos de archivos <a href="http://en.wikipedia.org/wiki/Make_%28software%29">Makefile</a></li>
+            <li><a href="http://joeyh.name/code/debhelper/">Debhelper</a>: Scripts en perl que automatizan parte de las operaciones frecuentes en la instalación de software (copiar archivos, crear directorios, links, etc. Algunos de ellos bastante frustantes)</li>
+            <li><a href="http://manpages.ubuntu.com/manpages/intrepid/man1/dh.1.html">Dh</a>: Un envolvedor de debhelper para llamar menos scripts de debhelper explicitamente</li>
+            <li>Sin auxiliares (Makefile): Definición manual de los objetivos; <b>build, binary, binary-arch, binary-indep, clean</b></li>
+          </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: parches</h2>
+      </hgroup><br><br><br><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Para integrar modificaciones en los archivos originales se usan sistemas de parches</li>
+          <ul>
+            <li><a href="https://packages.qa.debian.org/d/dpatch.html">dpatch (obsoleto)</a></li>
+            <li><a href="https://packages.qa.debian.org/d/dbs.html">dbs (obsoleto)</a></li>
+            <li><a href="https://packages.qa.debian.org/c/cdbs.html">simple-patchsys(obsoleto)</a></li>
+            <li><a href="http://savannah.nongnu.org/projects/quilt">quilt</a></li>
+            <li>¿futuro?</li>
+          </ul>
+        </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: curva de aprendizaje</h2>
+      </hgroup><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Si se consideran</li>
+          <ul>
+            <li>2 formas de generar el directorio <b>debian/</b></li>
+            <li>2 tipos de paquetes dependiendo del origen del software (nativo, externo)</li>
+            <li>4 programas auxiliares de empaquetamiento</li>
+            <li>1 sistema de parches</li>
+          </ul>
+        </ul>
+        <p>Existen <b>por lo menos</b> 32 <a href="http://www.lucas-nussbaum.net/blog/?p=751">combinaciones</a> de procedimientos para crear un paquete</p><br>
+        <ul>
+          <li>Y aún no se han considerado las reglas de empaquetado formal (<a href="https://www.debian.org/doc/debian-policy/">debian policy</a>, <a href="https://www.debian.org/doc/manuals/maint-guide/">new maintaner guide</a>)</li>
+        </ul>
+          <p style="text-align=center;">En resumen, empaquetar software para Ubuntu/Debian formalmente es díficil, si pueden, <b>evitenlo</b>. Tienen mejores cosas que hacer.</p>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: procedimiento</h2>
+      </hgroup><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Paquete nativo sin auxiliares: <b>debian/changelog</b> (dch --create)</li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg; mkdir -p pkg/trash-pkg-0.1/debian
+ $ (cd pkg/trash-pkg-0.1 && \
+    wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a>)
+ $ (cd pkg/trash-pkg-0.1 && cat > <a href="https://www.debian.org/doc/debian-policy/ch-controlfields.html">debian/changelog</a> &lt;&lt;END
+trash-pkg (0.1) $(awk -F"=" '/CODENAME/ {print $2}' /etc/*release); urgency=low
+
+  * Version inicial
+
+ -- Javier P.L. &lt;m@javier.io&gt;  $(date -R)
+END
+)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: procedimiento</h2>
+      </hgroup><br>
+      <article class="build">
+        <ul>
+          <li>Paquete nativo sin auxiliares: <b>debian/control</b></li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg/trash-pkg-0.1 && cat > <a href="https://www.debian.org/doc/debian-policy/ch-controlfields.html">debian/control</a> &lt;&lt;END
+Source: trash-pkg
+Section: utils
+Priority: optional
+Maintainer: Javier Lopez <m@javier.io>
+Build-Depends:
+Standards-Version: 3.9.4
+
+Package: trash-pkg
+Architecture: all
+Depends: dash
+Description: Rm wrapper around the trash freedesktop specification.
+ Long description
+END
+)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: procedimiento</h2>
+      </hgroup><br>
+      <article class="build">
+        <ul>
+          <li>Paquete nativo sin auxiliares: <b>debian/copyright</b></li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg; mkdir pkg/trash-pkg-0.1
+ $ (cd pkg/trash-pkg-0.1 && cat > <a href="https://www.debian.org/doc/manuals/maint-guide/dreq.en.html#rules">debian/copyright</a> &lt;&lt;END
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+
+Files: *
+Copyright: Copyright (c) 2015, Javier Lopez &lt;m@javier.io&gt;
+License: GPL-3
+
+Files: debian/*
+Copyright: Copyright (c) 2015, Javier Lopez &lt;m@javier.io&gt;
+License: GPL-3
+
+License: GPL-3
+ On Debian systems, the text of the GPL3 License can be found in
+ '/usr/share/common-licenses/GPL-3'.
+END
+)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: procedimiento</h2>
+      </hgroup><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Paquete nativo sin auxiliares: <b>debian/rules</b></li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg/trash-pkg-0.1 && wget <a href="http://git.io/AebN">http://git.io/AebN</a> -qO <a href="https://www.debian.org/doc/manuals/maint-guide/dreq.en.html#rules">debian/rules</a> )
+ $ (cd pkg/trash-pkg-0.1 && cat debian/rules)
+        </pre>
+        <ul>
+          <li>Generación del paquete: <b>dpkg-buildpackage</b></li>
+        <pre class="prettyprint" data-lang="sh">
+ $ sudo apt-get install fakeroot lintian devscripts
+ $ (cd pkg/trash-pkg-0.1 && dpkg-buildpackage -us -uc -rfakeroot)
+ $ (cd pkg/trash-pkg-0.1 && ls ../) #paquete fuente(dsc) y binario(deb)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: procedimiento</h2>
+      </hgroup><br><br>
+      <article class="build">
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg/trash-pkg-0.1 && debuild -us -uc) #paquete fuente(dsc) y binario(deb)
+        </pre>
+        <ul>
+          <li>debian/control</li>
+          <li>debian/changelog</li>
+          <li>debian/rules</li>
+          <ul>
+            <li>objetivos locales</li>
+          </ul>
+        </ul>
+        <ul>
+          <li>Sólo el paquete fuente (dsc)</li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg/trash-pkg-0.1 && dpkg-buildpackage -S -us -uc -rfakeroot)
+ #construcción del paquete binario desde un entorno aislado
+ $ (cd pkg/trash-pkg-0.1 && pbuilder build paquete.dsc)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: procedimiento</h2>
+      </hgroup><br><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Paquete externo con dh/get-orig-source: <b>dh_make</b></li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ sudo apt-get install dh-make
+ $ rm -rf pkg; mkdir -p pkg/trash-pkg-0.1
+ $ (cd pkg/ && wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a>)
+ $ (cd pkg/ && tar -zcf trash-pkg_0.1.orig.tar.gz trash)
+ $ (cd pkg/trash-pkg-0.1 && dh_make --single --packagename trash-pkg)
+ $ (cd pkg/trash-pkg-0.1 && rm debian/*.ex debian/*.EX)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: procedimiento</h2>
+      </hgroup><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Paquete externo con dh/get-orig-source: <b>debian/*</b></li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg/trash-pkg-0.1 && sed -i -e "/Section:/ s/:.*/: utils/" debian/control)
+ $ (cd pkg/trash-pkg-0.1 && sed -i -e "/Description:/ s/:.*/: $(echo \
+    Rm wrapper around the trash freedesktop specification.)/" debian/control)
+ $ (cd pkg/trash-pkg-0.1 && sed -i -e "/Homepage/d" debian/control)
+ $ (cd pkg/trash-pkg-0.1 && echo "trash usr/bin" &gt; debian/install)
+ $ (cd pkg/trash-pkg-0.1 && wget <a href="http://git.io/AIK4">http://git.io/AIK4</a> -qO- &gt;&gt;<a href="https://www.debian.org/doc/manuals/maint-guide/dreq.en.html#rules">debian/rules</a> )
+ $ (cd pkg/trash-pkg-0.1 && cat debian/rules)
+ $ (cd pkg/trash-pkg-0.1 && ./debian/rules get-orig-source)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: procedimiento</h2>
+      </hgroup><br>
+      <article class="build">
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg/trash-pkg-0.1 && debuild -us -uc) #paquete fuente(dsc) y binario(deb)
+        </pre>
+        <ul>
+          <li>debian/control</li>
+          <li>debian/changelog</li>
+          <li>debian/rules</li>
+          <ul>
+            <li>scripts originales (./configure, Makefile, etc)</li>
+            <li>suite debhelper (dh_*)</li>
+            <li>objetivos locales</li>
+          </ul>
+        </ul>
+        <ul>
+          <li>Sólo el paquete fuente (dsc)</li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg/trash-pkg-0.1 && debuild -S -us -uc -rfakeroot)
+ #construcción del paquete binario desde un entorno aislado
+ $ (cd pkg/trash-pkg-0.1 && pbuilder build paquete.dsc)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Empaquetado formal: balance</h2>
+      </hgroup><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Ventajas</li>
+          <ul>
+            <li>El resultado puede incorporarse eventualmente en Debian/Ubuntu</li>
+            <li>El paquete fuente puede copiarse a un PPA (<a href="https://help.launchpad.net/Packaging/PPA/Uploading">dput/dupload</a>) o a una <a href="https://www.debian.org/devel/buildd/">granja</a> de <a href="https://dev.launchpad.net/Soyuz">empaquetado</a></li>
+            <li>Apoyo de utilidades especializadas, pbuilder, dh, dch, etc</li>
+          </ul>
+          <li>Desventajas</li>
+          <ul>
+            <li>Complicado, existen muchos archivos que deben crearse/modificarse</li>
+            <li>Tedioso, existen muchas reglas que deben seguirse</li>
+            <li>Se requiere un sistema con Debian/Ubuntu para crear paquetes</li>
+          </ul>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>PPA diarios: panorama general</h2>
+      </hgroup>
+      <article class="build">
+      <span class="centered">
+        <a href="https://help.launchpad.net/Packaging/SourceBuilds/GettingStarted" style="color: white;text-decorations:none;" ><img src="images/empaquetado-ppa-panorama.png" alt="" title=""></a>
+      </span>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>PPA diarios: recetas</h2>
+      </hgroup>
+      <article class="build">
+        <ul>
+          <li>Importar los metadatos y los archivos originales a LP desde:</li>
+          <ul>
+            <li><a href="https://code.launchpad.net/+code-imports/+new">https://code.launchpad.net/+code-imports/+new</a></li>
+          </ul>
+          <li>Crear una <a href="https://help.launchpad.net/Packaging/SourceBuilds/GettingStarted">receta</a> de <a href="http://doc.bazaar.canonical.com/plugins/en/builder-plugin.html">bzr-builder</a> desde:</li>
+          <ul>
+            <li><a href="https://code.launchpad.net/~usuario/proyecto/programa/+new-recipe">https://code.launchpad.net/~usuario/proyecto/programa/+new-recipe</a></li>
+          </ul>
+        </ul>
+        <p>A tener en cuenta:
+        <ul>
+          <li>Sólo se puede crear un PPA cuando existe un empaquetado formal (<b>debian/</b>)</li>
+          <li>Sólo se puede crear un PPA cuando los datos estan alojados en <a href="https://launchpad.net">LP</a></li>
+          <li>Sólo se pueden copiar datos a <a href="https://launchpad.net">LP</a> desde repositorios públicos; git, bzr, svn y cvs</li>
+          <li>Antes de utilizar las granjas de LP se sugiere verificar la validez de la receta: <b>bzr dailydeb receta</b>(requiere <code>bzr branch lp:bzr-builder ~/.bazaar/plugins/builder</code>)</li>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>PPA diarios: procedimiento</h2>
+      </hgroup>
+      <article class="build">
+      <span class="centered">
+        <img src="images/random.png" style="width:35%" alt="" title="">
+        <p><a href="https://code.launchpad.net/~minos-archive">Ejemplos en ~minos-archive</a></p>
+      </span>
+        <ul>
+          <li>Caso hipotético de trash-pkg</li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ # bzr-builder format 0.3 deb-version 1:{time}+git{revno}
+ lp:~usuario/proyecto/trash-pkg
+ nest-part deb lp:~usuario/proyecto/trash-pkg-deb debian debian
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas</h2>
+      </hgroup><br><br><br><br>
+      <article class="build">
+        <p></p>
+        <ul>
+          <li>Los sistemas de empaquetamiento para Ubuntu/RedHat/etc tiene 15 años. Dificilmente sobreviviran otros 15.</li>
+          <li>Y si lo hicieran me sentiría muy triste =(</li>
+        </ul><br>
+        <p>Alternativas:</p><br>
+        <ul>
+          <li><a href="http://0install.net">0install - http://0install.net/</a>:  (universal)</li>
+          <li><a href="https://nixos.org/nix/">Nix - https://nixos.org/nix/</a> (unix)</li>
+          <li><a href="http://0pointer.net/blog/revisiting-how-we-put-together-linux-systems.html">¿Systemd? - http://www.freedesktop.org/wiki/Software/systemd/</a> (linux)</li>
+          <li><a href="https://click.readthedocs.org/en/latest/">Click - https://click.readthedocs.org/en/latest/</a> (ubuntu)</li>
+        </ul>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas: 0install (universal)</h2>
+      </hgroup>
+      <article class="build">
+        <span class="centered">
+          <img src="images/zeroinstall-icon.png" alt="zeroinstall icon" title="">
+        </span><br>
+        <pre class="prettyprint" data-lang="sh">
+ $ sudo apt-get install gdebi unzip
+ $ mkdir ~/.bin && export PATH=$PATH:$HOME/.bin
+ $ rm -rf pkg; mkdir pkg
+ $ (cd pkg && wget $(printf "%s%s" "http://people.ubuntu.com/~chilicuil/" \
+   "d/zeroinstall-injector_2.3.3-1_$(dpkg --print-architecture).deb"))
+ $ (cd pkg/ && sudo gdebi *.deb)
+ $ (cd pkg/ && wget <a href="http://git.io/Asto">http://git.io/Asto</a> -O <a href="http://0install.net/interface-spec.html">trash.xml</a> && cat trash.xml)
+ $ 0install add trash trash.xml
+ $ command -v trash && cat /home/admin/.bin/trash
+ $ trash -h
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas: Nix (unix)</h2>
+      </hgroup>
+      <article class="build">
+        <span class="centered">
+          <img src="images/nix-logo.png" alt="nix icon" title="">
+        </span><br><br>
+        <pre class="prettyprint" data-lang="sh">
+ $ sudo apt-get install curl
+ $ wget -qO- <a href="https://nixos.org/nix/install">https://nixos.org/nix/install</a> | $SHELL
+ $ . ~/.nix-profile/etc/profile.d/nix.sh
+ $ rm -rf pkg; mkdir pkg
+ $ (cd pkg && wget -q <a href="http://git.io/AZl6">http://git.io/AZl6</a> -O <a href="http://nixos.org/nixpkgs/manual/">trash.nix</a>)
+ $ (cd pkg && cat trash.nix && nix-env -i -f trash.nix)
+ $ command -v trash
+ $ trash -h
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas: systemd (linux)</h2>
+      </hgroup><br><br>
+      <article class="build">
+      <ul>
+        <li>Subvolumenes btrfs para instalar/actualizar/administrar so/apps/etc</li>
+        <li>Nuevo esquema de particiones con actualización por deltas</li>
+        <li>Actualizaciones inversas, cifrado/firmas digitales, datos deduplicados</li>
+      </ul>
+      <pre class="prettyprint" data-lang="config">
+ usr:&lt;compañía&gt;:&lt;arquitectura&gt;:&lt;versión&gt; #para sistemas completos
+ usr:com.ubuntu:amd64:16.04 #ejemplo directorio /usr en modo lectura
+
+ root:&lt;máquina&gt;:&lt;compañia&gt;:&lt;arquitectura&gt;:&lt;versión&gt; #instancias de SO
+ root:sup:com.ubuntu:amd64:16.04 #/etc, /var, etc en modo lectura/escritura
+
+ runtime:&lt;compañía&gt;:&lt;arquitectura&gt;:&lt;versión&gt;   #librerias, para usuarios
+ runtime:org.gnome.amd64:3.20.1 #ejemplo   /usr en modo lectura
+ framework:&lt;compañía&gt;:&lt;arquitectura&gt;:&lt;versión&gt; #cabeceras, para desarrolladores
+ framework:org.gnome.amd64:3.20.1 #ejemplo /usr/include/ en modo lectura
+      </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas: systemd (linux)</h2>
+      </hgroup><br><br><br>
+      <article class="build">
+      <ul>
+        <li>Modo de uso (hipotético)</li>
+      </ul>
+      <ul>
+        <li>Al arranque se monta root:usr:home: (del usuario que inicia sesión)</li>
+        <li>Al desarrollar una aplicación se pueden instalar/montar frameworks:</li>
+        <li>Al ejecutar una aplicación se monta app:runtime (esta última dependiendo de las dependencias del programa)</li>
+      </ul>
+      <pre class="prettyprint" data-lang="config">
+ app:&lt;compañía&gt;:&lt;runtime&gt;:&lt;arquitectura&gt;:&lt;versión&gt;
+ app:io.javier_trash:dash:amd64:0.1 #ejemplo, /opt en modo lectura
+
+ home:&lt;usuario&gt;:&lt;id&gt;:&lt;gid&gt;
+ home:javier:1000:1000
+      </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas: paquetes click (ubuntu >= 14.04)</h2>
+      </hgroup>
+      <article class="build">
+        <ul>
+          <li>Los archivos .click son contenedores ar con 4 <a href="http://www.iana.org/assignments/media-types/application/vnd.debian.binary-package">componentes</a>:</li>
+          <ul>
+            <li><b>debian-binary</b>:  versión del paquete ("2.0\n")</li>
+            <li><b>_click-binary</b>:  versión del paquete click ("0.4\n")</li>
+            <li><b>control.tar.gz</b>: metadatos; nombre, dependencias, scripts de mantenedores, etc</li>
+            <li><b>data.tar.gz</b>:    archivos del programa</li>
+          </ul>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ rm -rf pkg; mkdir pkg
+ $ (cd pkg && wget <a href="http://people.ubuntu.com/~chilicuil/d/trash.click">http://people.ubuntu.com/~chilicuil/d/trash.click</a>)
+ $ (cd pkg && ar xv trash.click)
+ trash.click
+ x - debian-binary
+ x - _click-binary
+ x - control.tar.gz
+ x - data.tar.xz
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas: paquetes click (ubuntu >= 14.04)</h2>
+      </hgroup>
+      <article class="build">
+        <pre class="prettyprint" data-lang="sh">
+ $ sudo apt-get install click && rm -rf pkg; mkdir -p pkg
+ $ (cd pkg && cat > <a href="http://bazaar.launchpad.net/~click-hackers/click/trunk/view/head:/doc/file-format.rst#L66">manifest.json</a> &lt;&lt;END
+{
+    "description": "Trash app",
+    "framework": "ubuntu-sdk-14.04",
+    "hooks": {
+        "trash-app": {
+            "desktop": "trash.desktop"
+        }
+    },
+    "maintainer": "Javier Lopez",
+    "name": "com.ubuntu.developer.chilicuil.trash",
+    "title": "trash",
+    "version": "0.1"
+}
+END
+)
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas: paquetes click (ubuntu >= 14.04)</h2>
+      </hgroup>
+      <article class="build">
+        <pre class="prettyprint" data-lang="sh">
+ $ (cd pkg && wget https://rawgit.com/chilicuil/learn/master/sh/tools/trash)
+ $ (cd pkg && cat > <a href="http://standards.freedesktop.org/desktop-entry-spec/latest/">trash.desktop</a> &lt;&lt;END
+[Desktop Entry]
+Version=1.0
+Name=Trash
+Comment=Rm wrapper around the trash freedesktop specification.
+Exec=sh trash
+Icon=utilities-terminal
+Terminal=true
+Type=Application
+Categories=Application;
+END
+)
+ $ click build pkg
+WARNING:root:Ignoring missing framework "ubuntu-sdk-14.04"
+Successfully built package in './com.ubuntu.developer.chilicuil.trash_0.1_all.click'.
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>Alternativas: paquetes click (ubuntu >= 14.04)</h2>
+      </hgroup><br><br><br><br>
+      <article class="build">
+        <ul>
+          <li>Instalación</li>
+        </ul>
+        <pre class="prettyprint" data-lang="sh">
+ $ sudo click install --user=$(whoami) --force-missing-framework \
+   com.ubuntu.developer.$(whoami).trash_0.1_all.click
+ $ sudo click list
+ $ #el registro se hace a través de un proceso de unity8
+ $ sh /opt/click.ubuntu.com/com.ubuntu.developer.chilicuil.trash/0.1/trash -h
+ $ sudo click unregister --user=$(whoami) com.ubuntu.developer.$(whoami).trash
+        </pre>
+      </article>
+    </slide>
+
+    <slide>
+      <hgroup>
+        <h2>¿Preguntas? ¿o@o?</h2>
+      </hgroup>
+      <article><br/>
+      <p class="centered"><b>Javier López - m@javier.io</b></p>
+      <p class="centered"><b>@chilicuil en twitter/irc</b></p><br>
+      <span class="centered">
+        <img src="images/contacto.png" style="width:50%" alt="" title="">
+      </span>
+      </article>
+    </slide>
+
+    <!--<slide>-->
+      <!--<hgroup>-->
+        <!--<h2>Comercial</h2>-->
+      <!--</hgroup>-->
+      <!--<article>-->
+      <!--<p>¡Estoy disponible!, soy freelance</p>-->
+      <!--<br>-->
+      <!--<ul>-->
+        <!--<li>migraciones</li>-->
+        <!--<li>cursos de actualización</li>-->
+        <!--<li>puesta en marcha de servicios (apache, mysql, elasticsearch, logstach, etc)</li>-->
+        <!--<li>corrección de errores en Ubuntu</li>-->
+        <!--<li>empaquetado de software</li>-->
+        <!--<li>traducción de software</li>-->
+      <!--</ul>-->
+      <!--<div class="centered">-->
+      <!--<p><a href="mailto:m@javier.io?subject=freelance">m@javier.io</a></p>-->
+      <!--</div>-->
+      <!--</article>-->
+    <!--</slide>-->
+
+    <slide class="thank-you-slide segue">
+      <aside class="gdbar right"><img src="images/ubuntu-icon-128.png"></aside>
+      <article class="flexbox vleft auto-fadein">
+        <h2>&lt;¡Gracias!&gt;</h2>
+        <p>Consulta esta presentación en línea</p>
+        <br>
+        <ul>
+          <li><a href="http://people.ubuntu.com/~chilicuil/talks/empaquetado-de-software-para-ubuntu/index.html" target="_blank">http://people.ubuntu.com/~chilicuil/talks/empaquetado-de-software-para-ubuntu</a></li>
+        </ul>
+      </article>
+      <p class="auto-fadein" data-config-contact>
+        <!-- populated from slide_config.json -->
+      </p>
+    </slide>
+
+    <slide class="logoslide dark nobackground">
+      <article class="flexbox vcenter">
+        <span><img src="images/telmex-hub.png"></span>
+      </article>
+    </slide>
+
+    <slide class="backdrop"></slide>
+
+  </slides>
+
+  <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  </script>
+
+  <!--[if IE]>
+    <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+  </body>
+</html>

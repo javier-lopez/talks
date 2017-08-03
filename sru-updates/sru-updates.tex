@@ -1,0 +1,270 @@
+%\documentclass[svgnames]{beamer}
+\documentclass[dvipsnames]{beamer}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages}
+\usepackage{alltt}
+\usepackage{verbatim}
+\usepackage{hyperref}
+
+\mode<presentation>
+{
+  \usetheme{Darmstadt}
+  %\usetheme{Antibes}
+  \usecolortheme[named=black]{structure} 
+  \usecolortheme{whale}
+  \usecolortheme{default}
+  %\setbeamercovered{transparent}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------CONTENT---------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Verifying SRU updates} 
+
+\author[Javier López]{Javier López - @chilicuil}
+
+\institute[Testing Classroom Saucy]
+{\url{https://wiki.ubuntu.com/Testing/Activities/Classroom/Saucy}}
+
+\date[2013]
+     {24th June - Testing Classroom Saucy}
+
+%require an .ps file ($ convert ubuntu.png ubuntu.ps)
+\pgfdeclareimage[height=.5cm]{ubuntu-logo}{imgs/ubuntu}
+\pgfdeclareimage[height=5cm]{team}{imgs/team}
+\pgfdeclareimage[height=5cm]{community}{imgs/community}
+
+\pgfdeclareimage[height=2cm]{updates}{imgs/updates}
+\pgfdeclareimage[height=5cm]{proposed_1}{imgs/proposed_1}
+\pgfdeclareimage[height=5cm]{proposed_2}{imgs/proposed_2}
+\pgfdeclareimage[height=5cm]{proposed_3}{imgs/proposed_3}
+\pgfdeclareimage[height=5cm]{proposed_4}{imgs/proposed_4}
+\pgfdeclareimage[height=5cm]{proposed_5}{imgs/proposed_5}
+\pgfdeclareimage[height=5cm]{proposed_6}{imgs/proposed_6}
+\pgfdeclareimage[height=5cm]{proposed_7}{imgs/proposed_7}
+\pgfdeclareimage[height=5cm]{proposed_8}{imgs/proposed_8}
+
+\pgfdeclareimage[height=5cm]{jono_quetzal}{imgs/jono_quetzal}
+\pgfdeclareimage[height=2cm]{uas_t}{imgs/uas_t}
+\pgfdeclareimage[height=5cm]{uas_1}{imgs/uas_1}
+\pgfdeclareimage[height=5cm]{uas_2}{imgs/uas_2}
+\pgfdeclareimage[height=5cm]{uas_3}{imgs/uas_3}
+\pgfdeclareimage[height=5cm]{uas_4}{imgs/uas_4}
+
+\logo{\pgfuseimage{ubuntu-logo}}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Index}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+%\beamerdefaultoverlayspecification{<+->}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Sponsor]{Canonical}
+
+\begin{frame}
+    \frametitle{The Canonical Community Team}
+  \begin{center}
+        \pgfuseimage{team}
+  \end{center}
+  \begin{center}
+    Canonical style
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Names}
+  \begin{itemize}
+  \item Jorge Castro
+  \item David Planella
+  \item John O'Bacon
+  \item Daniel Holbach
+  \item Nicholas Skaggs (Our boss)
+  \item Michael Hall
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Comunity}
+  \begin{center}
+        \pgfuseimage{community}
+  \end{center}
+  \begin{center}
+    Woooo!, ubuntu members
+  \end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[-proposed]{Updates -proposed}
+
+\begin{frame}
+  \frametitle {Updates -proposed, AKA SRU}
+  %\begin{center}
+        %\pgfuseimage{updates}
+  %\end{center}
+
+  {\em Ingredients:}
+  \begin{itemize}
+  \item Any Ubuntu version
+  \item Internet connection (the fastest the better)
+  \item Launchpad account
+  \item Optionally 'pbuilder' | virtualbox
+  \end{itemize}
+
+  {\vspace{3 mm}
+  \em Preparation time:}
+  \begin{itemize}
+  \item 30 min
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU}
+  \begin{center}
+        \pgfuseimage{proposed_1}
+  \end{center}
+  \begin{center}
+      \url{http://people.canon.../~ubuntu-archive/pending-sru.html}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU}
+  \begin{center}
+      \pgfuseimage{proposed_2}
+  \end{center}
+  \begin{center}
+      «Precise»
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Procedure}
+  \begin{itemize}
+  \item Confirm that a bug exists
+  \item Download and apply an update
+  \item Ensure that the update fixes the problem
+  \item Leave feedback
+  \item Wait a couple of days to see how an update made its way thanks to you! =)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU}
+  \begin{center}
+        \pgfuseimage{proposed_3}
+  \end{center}
+  \begin{center}
+      Bug \#988819
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU: Lp}
+  \begin{center}
+        \pgfuseimage{proposed_4}
+  \end{center}
+  \begin{center}
+      \url{https://bugs.launchpad.net/bugs/988819}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU: testing}
+  \begin{center}
+        \pgfuseimage{proposed_5}
+  \end{center}
+  \begin{center}
+      When an update is in -proposed, it needs to be tested before it goes to the -updates repository
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU: ejemplo}
+  \begin{itemize}
+  \item sudo apt-get -y install apache2 libapache2-modsecurity
+  \end{itemize}
+  \begin{center}
+    Action 'configtest' failed.
+    The Apache error log may have more information.
+    Your apache2 configuration is broken, so we're not restarting it for you
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU: example}
+  \begin{itemize}
+    \item sudo apt-get remove --purge apache2 libapache2-modsecurity
+    \item sudo apt-get autoremove --purge
+    \item sudo vi /etc/apt/sources.list
+  \end{itemize}
+    deb http://us.archive.ubuntu.com/ubuntu/ precise-proposed main restricted universe multiverse
+  \begin{itemize}
+    \item sudo apt-get update
+    \item sudo apt-get -y install apache2 libapache2-modsecurity
+  \end{itemize}
+    If the bug dissapears, the update is ready =)
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU: feedback}
+  \begin{center}
+        \pgfuseimage{proposed_6}
+  \end{center}
+  \begin{center}
+      Feedback is welcome even if the test wasn't successful, it's actually more important when an update was wrong
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{SRU: wiki}
+  \begin{center}
+        \pgfuseimage{proposed_8}
+  \end{center}
+  \begin{center}
+      \url{https://wiki.ubuntu.com/Testing/EnableProposed}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle {Help}
+  \begin{itemize}
+  \item \#ubuntu-testing en freenode.net
+  \item nicolas.skaggs@canonical.com
+  \item me ;)
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle {¡Thank you!}
+  \begin{center}
+      {\huge Questions? o@o?}
+  \end{center}
+  \begin{center}
+      {Javier López - chilicuil@ubuntu.com}
+  \end{center}
+  \begin{center}
+      {@chilicuil - \#ubuntu-testing}
+  \end{center}
+\end{frame}
+\end{document}
+
+%%
+%% Referencias:
+%%
+%% http://google.com

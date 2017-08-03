@@ -1,0 +1,3 @@
+http://yuml.me/edit/db5e7a38
+
+[archivos originales{bg:#e6e6e6}]->[data.tar.gz{bg:#e6e6e6}], [metadatos{bg:#e6e6e6}]->[control.tar.gz{bg:#e6e6e6}], [metadatos{bg:#e6e6e6}]->[debian-binary{bg:#e6e6e6}], [debian-binary{bg:#e6e6e6}]->[paquete.deb{bg:#e6e6e6}], [data.tar.gz{bg:#e6e6e6}]->[paquete.deb{bg:#e6e6e6}], [control.tar.gz{bg:#e6e6e6}]->[paquete.deb{bg:#e6e6e6}]

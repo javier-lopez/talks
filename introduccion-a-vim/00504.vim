@@ -1,0 +1,17 @@
+                                                                                         ______________________________________________________________________________
+                                                                                        |              |
+                                                                                        | 4.-          |  Modos    _(◣_◢)_
+                                                                                        |______________|
+
+                               :h vim-modes 
+                               ------------
+                                                                                        
+
+                                + Normal:
+                                     míticos hjkl, yy, dd, C, }... !!
+
+                                + Ex:
+                                     :split presentacion_vim.txt
+
+                                + Insert:
+                                     :se activa cuando presionas i, I, a, A, o, O... <esc>

@@ -1,0 +1,592 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="logoslide nobackground">
+    <article class="flexbox vcenter">
+      <!--<span><img src="images/google_developers_logo.png"></span>-->
+      <span><img src="images/ubuconla.png"></span>
+    </article>
+  </slide>
+
+  <slide class="title-slide segue nobackground">
+    <!--<aside class="note">-->
+      <!--<section>-->
+        <!--<ul>-->
+          <!--<li>¿Cuántas personas usan o han usado Ubuntu?</li>-->
+          <!--<li>¿Cuántas han colaborado con Ubuntu o con otra comunidad de SL?</li>-->
+        <!--</ul>-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>-->
+    <aside class="gdbar"><img src="images/ubuntu-icon-128.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <!--<aside class="note">-->
+      <!--<section>-->
+        <!--<p><a href="www.ubuntu.com/tour">http://www.ubuntu.com/tour</a></p>-->
+        <!--[><br/><]-->
+        <!--[><p><b>¿Quienes han usado o escuchado hablar de Ubuntu?</b></p><]-->
+      <!--</section>-->
+    <!--</aside>-->
+    <hgroup>
+      <h2>Sobre Ubuntu</h2>
+    </hgroup>
+    <aside class="gbar right"><img src="images/penguin-icon-128.png"></aside>
+    <article>
+      <!--<p>A list where items build:</p>-->
+      <br><br><br>
+      <ul class="build">
+        <li>Distribución de Linux basada en Debian</li>
+        <li>10 años de historia, 2004, 4.10 Warty Warthog</li>
+        <li>Lanzamiento cada 6 meses, soporte de 9 meses</li>
+        <li>Lanzamiento cada 2 años, soporte 5 años (LTS)</li>
+        <li>Tabletas, teléfonos y PCs</li>
+        <li>10~ sabores oficiales, Ubuntu, Lubuntu, Xubuntu, Kubuntu, etc</li>
+        <li>25~ millones de usuarios</li>
+        <li>700~ miembros oficiales, 100~ países</li>
+        <li>50k~ paquetes (programas instalables)</li>
+        <li>Patrocinadores, Canonical, Blue Systems &#x23ce;</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+        <p>Entre los proyectos que mantienen estan:</p>
+      <br/>
+      <ul>
+        <li><a href="https://launchpad.net">launchpad.net</a> (piedra angular)</li>
+        <li><a href="http://bazaar.canonical.com/en/">bazaar</a> (control de versiones)</li>
+        <li><a href="http://juju.ubuntu.com/">juju</a> (instalador y configurador de servicios)</li>
+        <li><a href="http://upstart.ubuntu.com/">upstart</a> (sistema init basado en eventos)</li>
+        <li><a href="https://unity.ubuntu.com/">unity, xmir</a>(pila gráfica)</li>
+        <li>etc</li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Canonical [p]</h2>
+    </hgroup>
+    <article>
+    <span class="centered"><img src="images/canonical.jpg"></span>
+    <span class="centered"><footer>Equipo de canonical: + 500 personas</footer></span>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+      <p>Actividades:</p>
+      <br/>
+      <ul>
+        <li>mejorar la plataforma, corregiendo errores, traduciendo, empaquetando software</li>
+        <li>dar soporte (documentación, ayuda en línea)</li>
+        <li>crear comunidad (organización de eventos)</li>
+        <li>etc</li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Comunidad [p]</h2>
+    </hgroup>
+    <article>
+    <span class="centered"><img src="images/ubuntu-members.png"></span>
+    <span class="centered"><footer>Comunidad: + 700 miembros oficiales</footer></span>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>¿Por qué &#x2661; contribuir a proyectos de SL?</h2>
+    </hgroup>
+    <aside class="gbar right"><img src="images/lista-icon-128.png"></aside>
+    <article>
+      <!--<p>A list where items build:</p>-->
+      <br><br><br><br><br><br>
+      <ul class="build">
+        <li>Diversión</li>
+        <li>Karma, tomar y dar de vuelta</li>
+        <li>Ayudar a otras personas</li>
+        <li>Aprender sobre otras culturas e idiomas</li>
+        <li>Conocer gente con pasión e intereses similares</li>
+        <li>Oportunidades de trabajo &#x23ce;</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>5 formas maneras de colaborar con Ubuntu</h2>
+    </hgroup>
+    <aside class="gbar right"><img src="images/lista-icon-128.png"></aside>
+    <article>
+      <!--<p>A list where items build:</p>-->
+      <br><br><br><br><br><br>
+      <ul>
+        <li>Integrar parches</li>
+        <li>Traducir el sistema</li>
+        <li>Crear/ejecutar pruebas</li>
+        <li>Soporte técnico</li>
+        <li>Mercadotecnia</li>
+      </ul>
+    </article>
+  </slide>
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Code Slide (with Subtitle Placeholder)</h2>-->
+      <!--<h3>Subtitle Placeholder</h3>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+      <!--<p>Press 'h' to highlight important sections of code (wrapped in <code>&lt;b&gt;</code>).</p>-->
+      <!--<pre class="prettyprint" data-lang="javascript">-->
+<!--&lt;script type='text/javascript'&gt;-->
+  <!--// Say hello world until the user starts questioning-->
+  <!--// the meaningfulness of their existence.-->
+  <!--function helloWorld(world) {-->
+    <!--<b>for (var i = 42; --i &gt;= 0;) {-->
+      <!--alert('Hello ' + String(world));-->
+    <!--}</b>-->
+  <!--}-->
+<!--&lt;/script&gt;-->
+<!--</pre>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Code Slide (Smaller Font)</h2>-->
+    <!--</hgroup>-->
+    <!--<article class="smaller">-->
+      <!--<pre class="prettyprint" data-lang="javascript">-->
+<!--// Say hello world until the user starts questioning--> <!--// the meaningfulness of their existence.-->
+<!--function helloWorld(world) {-->
+  <!--for (var i = 42; --i &gt;= 0;) {-->
+    <!--alert('Hello ' + String(world));-->
+  <!--}-->
+<!--}-->
+<!--</pre>-->
+<!--<pre class="prettyprint" data-lang="css">-->
+<!--&lt;style&gt;-->
+  <!--p { color: pink }-->
+  <!--b { color: blue }-->
+<!--&lt;/style&gt;-->
+<!--</pre>-->
+<!--<pre class="prettyprint" data-lang="html">-->
+<!--&lt;!DOCTYPE html>-->
+<!--&lt;html>-->
+<!--&lt;head>-->
+  <!--&lt;title>My Awesome Page&lt;/title>-->
+<!--&lt;/head>-->
+<!--&lt;body>-->
+  <!--&lt;p&gt;Hello world&lt;/p&gt;-->
+<!--&lt;body>-->
+<!--&lt;/html>-->
+<!--</pre>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Slide with Image (Centered horz/vert)</h2>-->
+    <!--</hgroup>-->
+    <!--<article class="flexbox vcenter">-->
+      <!--<img src="images/barchart.png" alt="Description" title="Description">-->
+      <!--<footer class="source">source: place source info here</footer>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Table Option A</h2>-->
+      <!--<h3>Subtitle Placeholder</h3>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+      <!--<table>-->
+        <!--<tr>-->
+          <!--<th></th><th>Column 1</th><th>Column 2</th><th>Column 3</th><th>Column 4</th>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td>Row 1</td><td>placeholder</td><td class="highlight">placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td>Row 2</td><td>placeholder</td><td>placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td>Row 3</td><td>placeholder</td><td>placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td>Row 4</td><td>placeholder</td><td>placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<td>Row 5</td><td>placeholder</td><td>placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+      <!--</table>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Table Option B</h2>-->
+      <!--<h3>Subtitle Placeholder</h3>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+      <!--<table class="rows">-->
+        <!--<tr>-->
+          <!--<th>Header 1</th><td>placeholder</td><td class="highlight">placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<th>Header 2</th><td>placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<th>Header 3</th><td>placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<th>Header 4</th><td>placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+          <!--<th>Header 5</th><td>placeholder</td><td>placeholder</td><td>placeholder</td>-->
+        <!--</tr>-->
+      <!--</table>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Slide Styles</h2>-->
+    <!--</hgroup>-->
+    <!--<article class="smaller">-->
+      <!--<div class="columns-2">-->
+        <!--<ul>-->
+          <!--<li class="red">class="red"</li>-->
+          <!--<li class="red2">class="red2"</li>-->
+          <!--<li class="red3">class="red3"</li>-->
+          <!--<li class="blue">class="blue"</li>-->
+          <!--<li class="blue2">class="blue2"</li>-->
+          <!--<li class="blue3">class="blue3"</li>-->
+          <!--<li class="green">class="green"</li>-->
+          <!--<li class="green2">class="green2"</li>-->
+        <!--</ul>-->
+        <!--<ul>-->
+          <!--<li class="green3">class="green3"</li>-->
+          <!--<li class="yellow">class="yellow"</li>-->
+          <!--<li class="yellow2">class="yellow2"</li>-->
+          <!--<li class="yellow3">class="yellow3"</li>-->
+          <!--<li class="gray">class="gray"</li>-->
+          <!--<li class="gray2">class="gray2"</li>-->
+          <!--<li class="gray3">class="gray3"</li>-->
+          <!--<li class="gray4">class="gray4"</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+      <!--<div class="centered" style="margin-top:2em">-->
+        <!--I am centered text with a <button>Button</button> and <button disabled>Disabled</button> button.-->
+      <!--</div>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <slide>
+    <aside class="note">
+      <section>
+      <ul>
+        <li><a href="https://wiki.ubuntu.com/OperationCleansweep">Operation Clean Sweep</a></li>
+        <li><a href="http://developer.ubuntu.com">http://developer.ubuntu.com</a></li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>1. Integrar parches, desarrollador [p]</h2>
+    </hgroup>
+    <article class="flexbox vleft">
+    <p><b>Datos:</b></p>
+    <div>
+      <ul class="build">
+        <li>Ubuntu es usado por 20 millones de personas</li>
+        <li>No se require saber programar pero sí tener habilidades técnicas</li>
+        <li>Perfil detectivesco</li>
+        <li>Cuenta en LP &#x23ce;</li>
+      </ul>
+    </div>
+    <p><b>Tiempo requerido por aporte:</b></p>
+    <div>
+      <ul class="build">
+        <li>~2 hrs</li>
+      </ul>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+      <ul>
+        <li><a href="https://wiki.ubuntu.com/UbuntuSpanishTranslators">https://wiki.ubuntu.com/UbuntuSpanishTranslators</a></li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>2. Traducir la interfaz, traductor [p]</h2>
+    </hgroup>
+    <article class="flexbox vleft">
+    <p><b>Datos:</b></p>
+    <div>
+      <ul class="build">
+        <li>El Español es el segundo idioma más popular del mundo (solo debajo del Chino)</li>
+        <li>Aprender/mejorar Inglés (las cadenas originales estan en Inglés)</li>
+        <li>Ayudar a distribuir un sistema operativo para hispanos</li>
+        <li>Cuenta en LP &#x23ce;</li>
+      </ul>
+    </div>
+    <p><b>Tiempo requerido por aporte:</b></p>
+    <div>
+      <ul class="build">
+        <li>&gt; 10 min</li>
+      </ul>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+      <ul>
+        <li><a href="https://wiki.ubuntu.com/QATeam">https://wiki.ubuntu.com/QATeam</a></li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>3. Crear/correr pruebas, tester [p]</h2>
+    </hgroup>
+    <article class="flexbox vleft">
+    <p><b>Datos:</b></p>
+    <div>
+      <ul class="build">
+        <li>Solucionar errores antes de liberar Ubuntu</li>
+        <li>Aprender a programar en python</li>
+        <li>Descubrir como obtener el máximo partido de Ubuntu</li>
+        <li>Cuenta en LP &#x23ce;</li>
+      </ul>
+    </div>
+    <p><b>Tiempo requerido por aporte:</b></p>
+    <div>
+      <ul class="build">
+        <li>1 hr</li>
+      </ul>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+      <ul>
+        <li><a href="http://ubuntu.shapado.com/">Ask Ubuntu en español</a></li>
+        <li><a href="https://webchat.freenode.net/?channels=ubuntu-es">IRC en ubuntu-es</a></li>
+        <li>Amigos locales</li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>4. Soporte técnico, auxiliar [p]</h2>
+    </hgroup>
+    <article class="flexbox vleft">
+    <p><b>Datos:</b></p>
+    <div>
+      <ul class="build">
+        <li>0 compromisos</li>
+        <li>Curva de aprendizaje amigable</li>
+        <li>Extremadamente importante</li>
+        <li>Pocos recursos en español &#x23ce;</li>
+      </ul>
+    </div>
+    <p><b>Tiempo requerido por aporte:</b></p>
+    <div>
+      <ul class="build">
+        <li>&gt; 5 min</li>
+      </ul>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+      <ul>
+        <li><a href="http://spreadubuntu.org">http://spreadubuntu.org</a></li>
+        <li><a href="http://ubuconla.org/">http://www.ubuconla.org/</a></li>
+        <li><a href="https://wiki.ubuntu.com/UbuntuWeeklyNewsletter">ubuntu weekly newsletter</a></li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>5. Mercadotecnia [p]</h2>
+    </hgroup>
+    <article class="flexbox vleft">
+    <p><b>Datos:</b></p>
+    <div>
+      <ul class="build">
+        <li>Promocionar Ubuntu</li>
+        <li>Crear arte</li>
+        <li>Organizar eventos</li>
+        <li>Etc &#x23ce;</li>
+      </ul>
+    </div>
+    <p><b>Tiempo requerido por aporte:</b></p>
+    <div>
+      <ul class="build">
+        <li>Varia considerablemente</li>
+      </ul>
+    </div>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+      <ul>
+        <li><a href="http://people.ubuntu.com/~chilicuil/points.lst.html">lista de actividades</a></li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Ubuntu, ¿aún inseguro? [p]</h2>
+    </hgroup>
+    <article>
+      <iframe data-src="http://people.ubuntu.com/~chilicuil/contribuir-test/index.html"></iframe>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+      <ul>
+        <li><a href="http://people.ubuntu.com/~chilicuil/contribuir-test/index.html">http://people.ubuntu.com/~chilicuil/contribuir-test/index.html</a></li>
+        <li><a href="http://people.ubuntu.com/~chilicuil/points.lst.html">lista de actividades</a></li>
+      </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Launchpad (LP), manos a la obra</h2>
+    </hgroup>
+    <article>
+    <!--launchpad doesn't allow to be iframed =/-->
+    <!--<iframe data-src="http://launchpad.net/"></iframe>-->
+    <span class="centered"><a href="https://launchpad.net"><img src="images/launchpad.png"></a></span>
+    </article>
+  </slide>
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Comercial</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<p>¡Estoy disponible!, soy freelance ;P</p>-->
+    <!--<br>-->
+    <!--<ul>-->
+      <!--<li>migraciones</li>-->
+      <!--<li>cursos de actualización</li>-->
+      <!--<li>puesta en marcha de servicios (http, db, logs, dns, mail, etc)</li>-->
+      <!--<li>corrección de errores en Ubuntu</li>-->
+      <!--<li>empaquetamiento de software</li>-->
+      <!--<li>traducción de software</li>-->
+    <!--</ul>-->
+    <!--<div class="centered">-->
+    <!--<p>&#9998; <a href="mailto:m@javier.io?subject=freelance">m@javier.io</a></p>-->
+    <!--</div>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <slide>
+    <hgroup>
+      <h2>¿Preguntas? ¿o@o?</h2>
+    </hgroup>
+    <article>
+    <br/><br/><br/>
+    <p class="centered"><b>Javier López - chilicuil@ubuntu.com</b></p>
+    <br>
+    <ul class="centered">
+      <li>@chilicuil - #ubuntu, #ubuntu-es</li>
+    </ul>
+    <br><br>
+    <span class="centered"><img src="images/ask.png"></span>
+    </article>
+  </slide>
+
+  <slide class="thank-you-slide segue">
+    <aside class="gdbar right"><img src="images/ubuntu-icon-128.png"></aside>
+    <!--<aside class="gdbar right"><img src="images/google_developers_icon_128.png"></aside>-->
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;¡Gracias!&gt;</h2>
+      <p>Consulta esta presentación en línea</p>
+      <br>
+      <ul>
+        <li><a href="http://people.ubuntu.com/~chilicuil/talks/5-formas-de-colaborar-con-ubuntu/index.html" target="_blank">http://people.ubuntu.com/~chilicuil/talks/5-formas-de-colaborar-con-ubuntu</a></li>
+      </ul>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="logoslide dark nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="images/ubuconla.png"></span >
+      <!--<span><img src="images/google_developers_logo_white.png"></span>-->
+    </article>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

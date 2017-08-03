@@ -1,0 +1,3 @@
+http://yuml.me/edit/ba7d629e
+
+[archivos originales{bg:#e6e6e6}]->[configure && make{bg:#e6e6e6}], [configure && make{bg:#e6e6e6}]->[checkinstall{bg:#e6e6e6}], [checkinstall{bg:#e6e6e6}]->[paquete.deb{bg:#e6e6e6}] 

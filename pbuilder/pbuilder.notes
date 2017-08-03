@@ -1,0 +1,70 @@
+Hi, I'm Javier Lopez an Ubuntu contributor: http://wiki.ubuntu.com/~chilicuil
+on this session I'll talk a little bit about pbuilder
+pbuilder is a tool many people in Debian & Ubuntu use to compile .deb packages, however it can also be used to test software, or to try things in a sandbox
+I made some slides that you can fetch from: http://people.ubuntu.com/~chilicuil/pdf/pbuilder.pdf
+if you have any question at any point feel free to ask in the #ubuntu-classroom-chat channel and I'll be happy to answer
+so, to begin
+technically, pbuilder is a cli driven wrapper in bash for chroot, debootstrap, dpkg-source and other similar tools
+it helps to create minimal Ubuntu setups (using debootstrap) which then are saved and compressed in /var/cache/pbuilder
+after the initial setup, pbuilder can uncompress and mount any of these images in a chroot environment
+chroot is an old tool which was introduced for the first time in the 70s on Unix systems
+it allows to change the root directory to one specified, this creates the ilussion that you are in other system from where you can launch apps that cannot access files from outside the chroot on normal conditions
+this minimal setups are easy to create and use with pbuilder
+to continue I'll ask you install:
+ $ sudo apt-get install pbuilder
+if you don't feel like installing anything in your computer feel free to ssh ubuntu@vps.javier.io and use any of the 10 available spots, passwd=ubuntu
+pbuilder has already been installed there so you can avoid the last step
+there are many alternatives to pbuilder, such as, pbuilder-dist, pbuild, sbuild, etc
+however in my opinion, pbuilder is one of the easiest to use and maintain once you've configured correctly 
+in order to start using it, you'll need to configure a couple of vars in your ~/.bashrc and ~/.pbuilderrc files
+first, you need to identify yourself, you can do it if you add the following to the ~/.bashrc file
+ export DEBEMAIL="yourmail@domain.com"
+ export DEBFULLNAME="Your Name"
+you can take a look to my Ubuntu vars here: https://github.com/chilicuil/dotfiles/blob/master/.alias.linux#L51
+once you've updated your file, you need to create a ~/.pbuilderrc file 
+ $ wget https://raw.github.com/chilicuil/dotfiles/master/.pbuilderrc -O $HOME/.pbuilderrc
+it is pure bash, I wont explain every aspect of it but the most important vars
+ UBUNTU_SUITES=("saucy" "raring" "quantal" "precise")
+here are defined the releases pbuilder will be able to manage, whenever a new dev cycle start you can update this part to include the newest ubuntu dev release
+ UBUNTU_MIRROR="us.archive.ubuntu.com"
+from where pbuilder will download files
+ PATH_PBUILDER="/var/cache/pbuilder"
+where minimal ubuntu setups will be saved
+ HOOKDIR="$HOME/.pbuider-hooks/"
+where hooks will be saved, hooks are nothing but scripts which are launched
+at different times, ie. before login into the chroot environment
+before building packages, before deleting the environment, etc
+right now I suggest you to trust me and use my personal conf
+however, you'll need to place a '#' before
+ export BUILDRESULT=....
+this will allow pbuilder to save to /var/cache/pbuilder/result/, otherwise it
+will fail when trying to copy to the specified version, I'm running a modified pbuilder version
+once configured, you can try to login:
+ $ sudo DIST=saucy ARCH=amd64 pbuilder login
+anyone was able to do it?, I'll wait a couple of minutes =)
+before using an specific release you need to create it
+ $ sudo DIST=saucy ARCH=amd64 pbuilder create
+ $ sudo DIST=precise ARCH=i386 pbuilder create
+if you already created a minimal setup, we can test it, create a hello dir
+ $ mkdir hello && cd hello
+ $ pull-lp-source hello #probably you'll need to install ubuntu-dev-tools
+the second command fetch the hello source code, alternatives are apt-get source and bzr branch
+to check that our pbuilder env is correct, we're gonna build the hello package parting from the source code
+the following command create a source deb file (.dsc), from where we can build a .deb package
+ $ cd hello-* && debuild -S -us -uc && cd ..
+and now pbuilder awesomeness:
+ $ sudo DIST=saucy ARCH=amd64 pbuilder build hello*.dsc
+this step will take a couple of minutes, and the result will be available in:
+ /var/cache/pbuilder/result/saucy-amd64
+please let me know how many of you were able to compile the hello package =O?
+great, now that we know for sure that pbuilder works we can use it for whichever we want
+one of these possibilities is for testing sru's
+ https://wiki.ubuntu.com/QATeam/PerformingSRUVerification
+try this:
+ $ sudo DIST=saucy ARCH=amd54 pbuilder login
+you've access to a pristine environment, cool, eh
+there are some tips available from the <SLIDE 16>, and some other good resources are:
+ * tinyurl.com/pbuilder 
+ * wiki.ubuntu.com/PbuilderHowto
+and if you need help, feel free to join us at #ubuntu-quality, #ubuntu-motu or ping me directly
+I think that's all, any question?

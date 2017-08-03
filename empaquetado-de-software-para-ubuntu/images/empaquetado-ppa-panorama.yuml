@@ -1,0 +1,9 @@
+http://yuml.me/edit/097c2bfb
+
+[archivos originales git bzr svn cvs{bg:#e6e6e6}]->[archivos originales lp-bzr{bg:#e6e6e6}]
+[debian bzr git svn cvs{bg:#e6e6e6}]->[debian lp-bzr{bg:#e6e6e6}]
+[archivos originales lp-bzr{bg:#e6e6e6}]->[bzr-builder{bg:#e6e6e6}]
+[debian lp-bzr{bg:#e6e6e6}]->[bzr-builder{bg:#e6e6e6}]
+[receta{bg:#e6e6e6}]->[bzr-builder{bg:#e6e6e6}]
+[bzr-builder{bg:#e6e6e6}]->[paquete.dsc{bg:#e6e6e6}]
+[bzr-builder{bg:#e6e6e6}]->[paquete.deb{bg:#e6e6e6}]

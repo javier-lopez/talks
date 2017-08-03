@@ -1,0 +1,34 @@
+                                                                                         ______________________________________________________________________________
+                                                                                        |              |
+                                                                                        | 6.-          | Objetos, marcas, historial
+                                                                                        |______________|
+
+
+
+
+
+                                              >> objetos 
+                                                  ci", da', ca{, di'a, d/?, v3ip
+                                                  function ($var) 
+                                                  {
+                                                    //code
+                                                  }
+                                                  ("string")
+                                              
+                                              >> marcas
+                                                  marcas ma, 'a, `a, '', gi,  :markS
+                                              
+                                              >> historial
+                                                  u, Ctrl-R
+                                                  undo-tree
+                                                  <Leader>u
+                                            
+            ٩(- ̮̮̃-̃)۶
+
+
+
+
+
+
+            
+                                                                                                                          (-(-_(-_-)_-)-) 

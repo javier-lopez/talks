@@ -1,0 +1,635 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="logoslide nobackground">
+    <article class="flexbox vcenter">
+      <!--<span><img src="images/google_developers_logo.png"></span>-->
+      <span><img src="images/ubuconla.png"></span>
+    </article>
+  </slide>
+
+  <slide class="title-slide segue nobackground">
+    <!--<aside class="note">-->
+      <!--<section>-->
+        <!--<ul>-->
+          <!--<li>¿Han usado o escuchado hablar de Linux?</li>-->
+          <!--<li>¿Han usado o escuchado hablar de Ubuntu?</li>-->
+        <!--</ul>-->
+        <!--[><p><b>¿Quienes han usado o escuchado hablar de Linux?</b></p><]-->
+        <!--[><br/><]-->
+        <!--[><p><b>¿Quienes han usado o escuchado hablar de Ubuntu?</b></p><]-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>-->
+    <aside class="gdbar"><img src="images/terminal-gray.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Unix como IDE</h2>
+    </hgroup>
+    <article>
+    <span class="centered">
+      <img src="images/unix-as-an-ide.png" alt="Description" title="Description">
+    </span>
+      <div style="margin: auto; position: absolute; top: 80%; left: 20%; bottom: 0; right: 0;">
+        <h2>La composición aplicada al software</h2>
+      </div>
+    <!--<footer class="source">Composición aplicado al software</footer>-->
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Shundle (Sh + Bundle)</h2>
+    </hgroup>
+    <article>
+    <span class="centered">
+      <br/>
+      <br/>
+      <img src="images/shundle.gif" alt="Description" title="Description">
+    </span>
+      <div style="margin: auto; position: absolute; top: 80%; left: 20%; bottom: 0; right: 0;">
+        <a href="http://github.com/chilicuil/shundle"><h2>http://github.com/chilicuil/shundle</h2></a>
+      </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Características</h2>
+    </hgroup>
+    <!--<aside class="gbar right"><img src="images/penguin-icon-128.png"></aside>-->
+    <article>
+      <br><br>
+      <ul class="build">
+        <li>Fácil de instalar/eliminar</li>
+        <ul>
+          <li>git clone url / rm -rf ~/.shundle</li>
+        </ul>
+        <li>Fácil de integrar/extender</li>
+        <ul>
+          <li>Basado en plugins, shundle se adapta a tu forma de trabajar y no al revés</li>
+        </ul>
+        <li>Descentralizado</li>
+        <ul>
+          <li>Para promover la competencia de plugins</li>
+        </ul>
+        <li>¡Rápido!</li>
+        <ul>
+          <li>¿A quién le gustan los sistemas lentos?</li>
+        </ul>
+        <li>Compatible</li>
+        <ul>
+          <li>Con el estandard POSIX, sh, bash, zsh, linux/freebsd/macosx</li>
+        </ul>
+        <!--<li>Inspirado en Vundle</li>-->
+        <!--<ul>-->
+          <!--<li>Un plugin que revolucionó la forma de instalar aditivos a Vim &#x23ce;</li>-->
+        <!--</ul>-->
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Demostración</h2>
+    </hgroup>
+    <article>
+    <span class="centered">
+      <a href="http://github.com/chilicuil/shundle"><img src="images/standby.png" alt="" title=""></a>
+    </span>
+      <!--<div style="margin: auto; position: absolute; top: 80%; left: 20%; bottom: 0; right: 0;">-->
+        <!--<a href="http://github.com/chilicuil/shundle"><h2>http://github.com/chilicuil/shundle</h2></a>-->
+      <!--</div>-->
+    </article>
+  </slide>
+
+  <!--<slide>-->
+    <!--<aside class="note">-->
+      <!--<section>-->
+        <!--<p><a href="www.ubuntu.com/tour">http://www.ubuntu.com/tour</a></p>-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<hgroup>-->
+      <!--<h2>Unix como IDE</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+      <!--<iframe data-src="http://people.ubuntu.com/~chilicuil/ubuntu-online/es/index.html"></iframe>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Slide with Bullets</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+      <!--<ul>-->
+        <!--<li>Titles are formatted as Open Sans with bold applied and font size is set at 45</li>-->
+        <!--<li>Title capitalization is title case-->
+          <!--<ul>-->
+            <!--<li>Subtitle capitalization is title case</li>-->
+          <!--</ul>-->
+        <!--</li>-->
+        <!--<li>Subtitle capitalization is title case</li>-->
+        <!--<li>Titles and subtitles should never have a period at the end</li>-->
+      <!--</ul>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <slide>
+    <hgroup>
+      <h2>Ejemplo de configuración</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="sh">
+if [ -e ~/.shundle/bundle/shundle/shundle ]; then
+   .  ~/.shundle/bundle/shundle/shundle
+   #permite que shundle se administre asi mismo, requerido
+   Bundle='chilicuil/shundle'
+
+   #permite usar plugins alojados en GitHub
+   Bundle='https://github.com/chilicuil/shundle-plugins/aliazator.git'
+       ALIAZATOR_PLUGINS="installed"
+
+   #o en otros lugares
+   Bundle='git://git.domain.com/rep.git'
+
+   #se pueden usar scripts disponibles en la web
+   Bundle='http://domain.com/awesome-script'
+
+   #o que son parte del sistema local
+   Bundle='file://path/to/awesome-script'
+fi
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Repositorio de plugins</h2>
+    </hgroup>
+    <article>
+    <span class="centered">
+     <img src="images/shundle-repository.png" alt="" title="">
+    </span>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Tipos de plugins</h2>
+    </hgroup>
+    <!--<aside class="gbar right"><img src="images/say-icon-128.png"></aside>-->
+    <article class="flexbox vleft">
+    <!--<p>Libertad para:</p><br>-->
+      <ul class="build">
+        <li>Scripts</li>
+          <ul>
+            <li>Descargables o disponibles en el sistema de archivos local</li>
+            <li>Bundle 'http://direccion'</li>
+            <li>Bundle 'file://direccion'</li>
+            <li>No requieren tratamiento especial</li>
+          </ul>
+        <li>Plugins para shundle &#x23ce;</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Plugins para shundle I</h2>
+    </hgroup>
+    <!--<aside class="gbar right"><img src="images/say-icon-128.png"></aside>-->
+    <article class="flexbox vleft">
+    <p>Fuera de los scripts, los plugins específicos para shundle requieren algunas consideraciones.</p><br>
+    <h2>Cabecera</h2><br>
+      <pre class="prettyprint" data-lang="sh">
+# Name:         aliazator
+# Author:       Javier López <m@javier.io>
+# Description:  aliazator manages aliases
+# License:      wtfpl
+# Source:       http://github.com/chilicuil/shundle-plugins/aliazator
+# Version:      0.1
+# Shell:        sh
+# Depends:      none
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Plugins para shundle II</h2>
+    </hgroup>
+    <!--<aside class="gbar right"><img src="images/say-icon-128.png"></aside>-->
+    <article class="flexbox vleft">
+    <h2>Preferencias</h2><br>
+      <pre class="prettyprint" data-lang="sh">
+#===============================================================================
+#================================ Settings =====================================
+#===============================================================================
+#Don't modify this section directly, instead set options in your shell init file
+[ -z "${ALIAZATOR_PLUGINS}" ] && ALIAZATOR_PLUGINS="minimal"
+[ -z "${ALIAZATOR_CLOUD}" ]   && ALIAZATOR_CLOUD=""
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Plugins para shundle III</h2>
+    </hgroup>
+    <!--<aside class="gbar right"><img src="images/say-icon-128.png"></aside>-->
+    <article class="flexbox vleft">
+    <h2>Plugin</h2><br>
+      <pre class="prettyprint" data-lang="sh">
+#===============================================================================
+#================================== Plugin =====================================
+#===============================================================================
+
+export ALIAZATOR_PATH=""${plugin}"/aliazator/aliases"
+export ALIAZATOR_CACHE="${ALIAZATOR_PLUGINS}"
+
+. "${plugin}"/aliazator/bin/aliazator-enable "${ALIAZATOR_PLUGINS}"
+
+_shundle_expose aliazator=". ${plugin}/aliazator/bin/aliazator"
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Plugins para shundle IV, protip</h2>
+    </hgroup>
+    <!--<aside class="gbar right"><img src="images/say-icon-128.png"></aside>-->
+    <article class="flexbox vleft">
+    <h3>Utilizar como base algún plugin ya definido</h3><br>
+    <span class="centered">
+     <img src="images/random.png" alt="" title="">
+    </span>
+    </article>
+  </slide>
+  <!--[><slide><]-->
+    <!--[><article><]-->
+      <!--[><iframe data-src="http://www.google.com/doodle4google/resources/history.html"></iframe><]-->
+    <!--[></article><]-->
+  <!--[></slide><]-->
+
+   <!--[><slide class="fill nobackground" style="background-image: url(images/bg.png)"><]-->
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, ¿es para mi?</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>¿Requieren características avanzadas de Microsoft Office?</li>-->
+      <!--<li>¿Ejecutan juegos de gama alta?</li>-->
+      <!--<li>¿Dependen de aplicaciones de adobe para diseño profesional? &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<span class="centered">-->
+      <!--<img src="images/ubuntu-es-para-mi.png" alt="Description" title="Description">-->
+    <!--</span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<aside class="note">-->
+      <!--<section>-->
+      <!--<p><a href="http://ubuntu.com/download">http://www.ubuntu.com/download</a></p>-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, seleccionar la versión correcta [p]</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>Desktop/Kubuntu/Xubuntu/Lubuntu, i386/amd64</li>-->
+      <!--<li>Server, Cloud, Minimal, Core, arm</li>-->
+      <!--<li>Hardware certificado &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<span class="centered">-->
+<!--[><video autoplay="on" loop="on" src="http://cdn.elegantthemes.com/preview/Divi/wp-content/uploads/2013/11/drawing1.webm"><]-->
+      <!--<img src="images/ubuntu_universal.png"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<aside class="note">-->
+      <!--<section>-->
+      <!--<ul>-->
+        <!--<li>Ayuda integrada <b>F1</b></li>-->
+        <!--<li><a href="http://ubuntu.shapado.com/">Ask Ubuntu</a></li>-->
+        <!--<li><a href="http://ubuntumexico.org">Ubuntu-Mx</a></li>-->
+        <!--<li><a href=" http://www.ubuntu.com/management/ubuntu-advantage">Ubuntu advantage</a></li>-->
+      <!--</ul>-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, encontrar ayuda [p]</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+      <!--<iframe data-src="http://ubuntu.shapado.com/"></iframe>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, comunidad</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>Reglas de convivencia</li>-->
+      <!--<li>Gobierno</li>-->
+      <!--<li>Equipos</li>-->
+      <!--<li>Personas</li>-->
+      <!--<li>Sé parte de nosotros &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<span class="centered">-->
+<!--[><video autoplay="on" loop="on" src="http://cdn.elegantthemes.com/preview/Divi/wp-content/uploads/2013/11/drawing1.webm"><]-->
+      <!--<img src="images/crowd.jpg"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<aside class="note">-->
+      <!--<section>-->
+      <!--<p><a href="http://www.ubuntu.com/about/about-ubuntu/conduct">http://www.ubuntu.com/about/about-ubuntu/conduct</a></p>-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, reglas de convivencia [p]</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>Ser considerado</li>-->
+      <!--<li>Ser respetuoso</li>-->
+      <!--<li>Ser colaborativo &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<span class="centered"><img src="images/coc.jpg"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, gobierno</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>Self Appointed Benevolent Dictator For Life, Mark Shuttleworth</li>-->
+      <!--<li>Ubuntu Community Council</li>-->
+      <!--<li>Ubuntu Technical Board</li>-->
+      <!--<li>Forum, IRC, Loco Councils</li>-->
+      <!--<li>Ubuntu Membership, Ubuntu Developer, Ubuntu Review Boards &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<br><br>-->
+    <!--<span class="centered"><img src="images/ubuntu-governance.png"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<aside class="note">-->
+      <!--<section>-->
+      <!--<p><a href="https://wiki.ubuntu.com/Teams">https://wiki.ubuntu.com/Teams</a></p>-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, equipos [p]</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>Kernel, foundations, QA</li>-->
+      <!--<li>Desktop, security, community, server</li>-->
+      <!--<li>Design, news, flavours</li>-->
+      <!--<li>Documentation, translation, LoCos &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<br>-->
+    <!--<span class="centered"><img src="images/contribute.jpg"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, personas</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>LoCos (equipos locales)</li>-->
+      <!--<li>Miembros oficiales</li>-->
+      <!--<li>Usuarios &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<br>-->
+    <!--<span class="centered"><img src="images/advocacy.jpg"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, sé parte de nosotros</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<br>-->
+    <!--<span class="centered"><img src="images/ubuntu-members.png"></span >-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<aside class="note">-->
+      <!--<section>-->
+        <!--<li>-->
+          <!--<a href="https://wiki.ubuntu.com/Membership">https://wiki.ubuntu.com/Membership</a>-->
+        <!--</li>-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, sé parte de nosotros - ventajas [p]</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>Aprender|mejorar inglés | habilidades técnicas</li>-->
+      <!--<li>Hacer amigos, participación en los comicios internos</li>-->
+      <!--<li>Hosting gratis, dirección @ubuntu.com</li>-->
+      <!--<li>Descuentos, suscripciones</li>-->
+      <!--<li>Referencias laborales &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<br>-->
+    <!--<span class="centered"><img src="images/join-us.png"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, sé parte de nosotros - procedimiento</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>colaboración mínima de 6 meses, significativa y continua</li>-->
+      <!--<li>no tiene que ser técnica, se aceptan contribuciones sociales</li>-->
+      <!--<li>código de conducta, llave gpg</li>-->
+      <!--<li>solicitar membresía al <a href="https://wiki.ubuntu.com/Membership/Boards">UMB</a> &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<span class="centered"><img src="images/certificado.png"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, ideas de colaboración, I</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li><a href="http://spreadubuntu.neomenlo.org">http://spreadubuntu.neomenlo.org</a> diseño</li>-->
+      <!--<li>organizar eventos, ubuntu user days, <a href="https://wiki.ubuntu.com/UbuntuGlobalJam">ubuntu global jams</a></li>-->
+        <!--<li>participar en un equipo <a href="http://ubuntumexico.org">local</a></li>-->
+      <!--<li>reportar|corregir errores, programar aplicaciones</li>-->
+      <!--<li>escribir documentos de ayuda &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<span class="centered"> <img src="images/colaboracion_I.jpg"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, ideas de colaboración, II</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<ul class="build">-->
+      <!--<li>Ejecutar tests sobre las versiones en desarrollo</li>-->
+      <!--<li>Traducir el sistema</li>-->
+      <!--<li>Desarrollar sitios web con temas de Ubuntu</li>-->
+      <!--<li>Escribir noticias</li>-->
+      <!--<li>Instalar Ubuntu en equipos de amigos</li>-->
+      <!--<li>Dar charlas sobre Ubuntu &#x23ce;</li>-->
+    <!--</ul>-->
+    <!--<span class="centered"><img src="images/colaboracion_II.jpg"></span>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <!--<slide>-->
+    <!--<aside class="note">-->
+      <!--<section>-->
+        <!--<p><a href="http://people.ubuntu.com/~chilicuil/contribuir-test/index.html">http://people.ubuntu.com/~chilicuil/contribuir-test/index.html</a></p>-->
+        <!--[><br/><]-->
+        <!--[><p><b>¿Quienes han usado o escuchado hablar de Ubuntu?</b></p><]-->
+      <!--</section>-->
+    <!--</aside>-->
+    <!--<hgroup>-->
+      <!--<h2>Ubuntu, ¿aún inseguro? [p]</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+      <!--<iframe data-src="http://people.ubuntu.com/~chilicuil/contribuir-test/index.html"></iframe>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <slide>
+    <hgroup>
+      <h2>¿Preguntas? ¿o@o?</h2>
+    </hgroup>
+    <article>
+    <br/><br/><br/>
+    <p class="centered"><b>Javier López - m@javier.io</b></p>
+    <br>
+    <span class="centered"><img src="images/twitter-128.png"></span>
+    <br>
+    <p class="centered"><b>@chilicuil</b></p>
+    <!--<br><br>-->
+    </article>
+  </slide>
+
+  <!--<slide>-->
+    <!--<hgroup>-->
+      <!--<h2>Comercial</h2>-->
+    <!--</hgroup>-->
+    <!--<article>-->
+    <!--<p>¡Estoy disponible!, soy freelance</p>-->
+    <!--<br>-->
+    <!--<ul>-->
+      <!--<li>migraciones</li>-->
+      <!--<li>cursos de actualización</li>-->
+      <!--<li>puesta en marcha de servicios (apache, mysql, elasticsearch, logstach, etc)</li>-->
+      <!--<li>corrección de errores de Ubuntu</li>-->
+      <!--<li>empaquetamiento de software</li>-->
+      <!--<li>traducción de software</li>-->
+    <!--</ul>-->
+    <!--<div class="centered">-->
+    <!--<p><a href="mailto:m@javier.io?subject=freelance">m@javier.io</a></p>-->
+    <!--</div>-->
+    <!--</article>-->
+  <!--</slide>-->
+
+  <slide class="thank-you-slide segue">
+    <aside class="gdbar right"><img src="images/terminal-gray.png"></aside>
+    <!--<aside class="gdbar right"><img src="images/google_developers_icon_128.png"></aside>-->
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;¡Gracias!&gt;</h2>
+      <p>Consulta esta presentación en línea</p>
+      <br>
+      <ul>
+        <li><a href="http://people.ubuntu.com/~chilicuil/talks/shundle/index.html" target="_blank">http://people.ubuntu.com/~chilicuil/talks/shundle</a></li>
+      </ul>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="logoslide dark nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="images/ubuconla.png"></span >
+      <!--<span><img src="images/google_developers_logo_white.png"></span>-->
+    </article>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
