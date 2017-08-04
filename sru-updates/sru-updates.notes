@@ -1,7 +1,7 @@
 Hi and welcome to this intro to sru testing, aka testing for proposed updates
-my name is Javier Lopez http://wiki.ubuntu.com/~chilicuil
+my name is Javier López http://wiki.ubuntu.com/~javier-lopez
 this session will be practical so prepare your lp id and terminal =)
-also, I made some slides, you can fetch them from: http://people.ubuntu.com/~chilicuil/pdf/sru-updates.pdf
+also, I made some slides, you can fetch from: http://people.ubuntu.com/~javier-lopez/pdf/sru-updates.pdf
 if you have any question at any point feel free to ask in the #ubuntu-classroom-chat channel and I'll be glad to answer them
 so, to begin
 a SRU is a proposed update which has already been accepted in the ubuntu dev version and now is trying to make its way to a stable release (precise, quantal or raring)
@@ -15,19 +15,19 @@ so why stable ubuntu versions have a different policy?
 in the past even one liner fixes have brought important issues, bugs #81125, #309674 and #559822 are some examples
 so we're trying to ensure updates archived in -updates don't break your computer =)
 unfortunately, this policy has an issue
-if no one actually test that a proposed update is good enough to get copied to stable releases, it could stay at -proposed starving for ever
+if no one actually test proposed updates are good enough those update will stay at -proposed for ever
 a complete list of current -proposed updates are here: http://people.canonical.com/~ubuntu-archive/pending-sru.html
 as you can see, there are updates for all stable releases, lucid, precise, quantal and raring, once saucy gets released, updates will appear here before they get distributed to everyone
 blue and green updates are optimal to test
-so, now I'd like that we test a couple of them
+so, now we'll test a couple of them
 you'll need:
  * any stable ubuntu release, I'll asume raring for this example
  * a lp account
  * optionally, pbuilder, virtualbox or a spare machine
-if you don't have a lp account you can create one in a couple of minutes: https://launchpad.net/+login I'll wait here =)
-ok, now that you have a launchpad account, let's review some of the pending updates: http://people.canonical.com/~ubuntu-archive/pending-sru.html
+if you don't have a lp account you can create one in a couple of minutes: https://launchpad.net/+login
+now, let's review some of the pending updates: http://people.canonical.com/~ubuntu-archive/pending-sru.html
 as you can see, there are plenty of opportunities to help
-however for now I'd like that we could focus on software-properties, specifically
+however for now we'll focus on software-properties, specifically
 bug #1047424
 https://bugs.launchpad.net/ubuntu/+source/software-properties/+bug/1047424
 this report was opened to fix a problem with the additional drivers dialog
@@ -36,37 +36,37 @@ if they're not clear enough then you can put a comment in the report and add the
 the 'test case' section is specially helpful try to not overlook it
 before going further, I recommend to upgrade the system
 $ sudo apt-get update && sudo apt-get upgrade
-I'll wait a couple of minutes for those who would like to follow the live SRU
-testing =)
+I'll wait a couple of minutes for those willing to follow
 alright, now that we have an updated system, we're gonna see if the problem is
-still there (when the button 'restart' is pressed the system halts instead of
-rebooting)
+still there (when the button 'restart' is pressed the system halts instead of rebooting)
 we can look for 'drivers' directly in the dash and select 'Software & Updates'
-after opening it, we can click the latest tab 'Additional Drivers' and install |
-remove a driver, let's do it
-after select ing one driver we can press 'Apply changes', which will triage the
-process
-please let me know when you had complete this step =)
+after opening it, we can click the latest tab 'Additional Drivers' and install
+or remove a driver, let's do it
+after selecting one driver we can press 'Apply changes'
+that will triage the process
+please let me know when you've completed the step =)
 alright, I think we can continue
 now, a 'Restart...' button should appear.., click on it
 a dialog asking for confirmation will appear, and it'll only have 'cancel' and
 'shutdown' as options, click 'cancel'
-instead of that dialog, a restart dialog should appear, so we've found the
-issue!
+instead of that dialog, a restart dialog should appear, so we've found the issue!
 after confirming the error, we can apply the -proposed update and see if that
 fix the problem, detailed instructions are here: https://wiki.ubuntu.com/Testing/EnableProposed
 the safest way to do it IMO is to modify /etc/apt/sources.list directly
-so, if you don't feel like reading the wiki right now, you can trust me and run:
+if you don't feel like reading the wiki right now, you can trust me and run:
 $ echo 'deb http://mx.archive.ubuntu.com/ubuntu/ raring-proposed main restricted multiverse universe' | sudo tee /etc/apt/sources.list.d/proposed.list
 after adding the proposed repository the system needs to update the index and apply the updates
 $ sudo apt-get update && sudo apt-get install software-properties-gtk
-now, it's time to retry the dialog, close the software-properties dialog, and
-then look for it and reopen it
+now, it's time to retry the dialog to see if it's been fixed
+close the software-properties dialog, and reopen it
 once open, go to the driver tab and select the 'Restart ...' button
 this time a reboot dialog should be shown, how many saw this dialog?
-you guys are awesome, that's exactly what SRU testing is about
+you guys are awesome! =)!, that's exactly what SRU testing is about
 so, once we've tested and confirm that the proposed update fixes the reported
 issue, we can add comments, those who completed the sru testing, please do so
 it's also a nice idea to add the 'verification-done' tag
-done, that's it, now, a member of the SRU team will look at the comment and
+so, that's it for now, a member of the SRU team will look at the comment and
 hopefully will aprove and copy the requested update to the -updates repository
+if you've any trouble going throug a further sru update, please don't hesitate to ask
+on #ubuntu-quality or to me if I'm around =P
+thank you for your time, that's all for me =)

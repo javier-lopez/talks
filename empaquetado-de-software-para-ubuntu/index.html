@@ -119,7 +119,7 @@
         </ul>
         <pre class="prettyprint" data-lang="sh">
  $ rm -rf pkg; mkdir pkg
- $ (cd pkg && wget <a href="http://people.ubuntu.com/~chilicuil/d/bash-completion_2.1-4_all.deb">http://people.ubuntu.com/~chilicuil/d/bash-completion_2.1-4_all.deb</a>)
+ $ (cd pkg && wget <a href="http://people.ubuntu.com/~javier-lopez/d/bash-completion_2.1-4_all.deb">http://people.ubuntu.com/~javier-lopez/d/bash-completion_2.1-4_all.deb</a>)
  $ (cd pkg && ar xv bash-completion_2.1-4_all.deb)
  bash-completion_2.1-4_all.deb
  x - debian-binary
@@ -138,7 +138,7 @@
         <pre class="prettyprint" data-lang="sh">
  $ rm -rf pkg; mkdir pkg
  $ (cd pkg && echo "2.0" > <a href="http://www.iana.org/assignments/media-types/application/vnd.debian.binary-package">debian-binary</a>) #primer componente
- $ (cd pkg && wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a> -P usr/bin)
+ $ (cd pkg && wget <a href="https://rawgit.com/javier-lopez/learn/master/sh/tools/trash">https://rawgit.com/javier-lopez/learn/master/sh/tools/trash</a> -P usr/bin)
  $ (cd pkg && tar czf data.tar.gz usr) #segundo
  $ (cd pkg && cat > <a href="https://www.debian.org/doc/debian-policy/ch-controlfields.html">control</a> &lt;&lt;END
 Package: trash-pkg
@@ -237,7 +237,7 @@ END
         </ul>
         <pre class="prettyprint" data-lang="sh">
  $ rm -rf pkg; mkdir pkg
- $ (cd pkg && wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a>)
+ $ (cd pkg && wget <a href="https://rawgit.com/javier-lopez/learn/master/sh/tools/trash">https://rawgit.com/javier-lopez/learn/master/sh/tools/trash</a>)
  $ (cd pkg && echo "Rm wrapper around the trash freedesktop specification." \
     &gt; description-pak)
  $ (cd pkg && sudo checkinstall --fstrans=yes --install=no -D --pkgname=trash-pkg \
@@ -317,7 +317,7 @@ END
         </ul>
         <pre class="prettyprint" data-lang="sh">
  $ rm -rf pkg; mkdir pkg
- $ (cd pkg && wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a>)
+ $ (cd pkg && wget <a href="https://rawgit.com/javier-lopez/learn/master/sh/tools/trash">https://rawgit.com/javier-lopez/learn/master/sh/tools/trash</a>)
  $ (cd pkg && fpm -s dir -t deb \
    --description "Rm wrapper around the trash freedesktop specification." \
    --prefix /usr/bin -n trash-pkg -v 0.1 -a all trash)
@@ -534,7 +534,7 @@ END
         <pre class="prettyprint" data-lang="sh">
  $ rm -rf pkg; mkdir -p pkg/trash-pkg-0.1/debian
  $ (cd pkg/trash-pkg-0.1 && \
-    wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a>)
+    wget <a href="https://rawgit.com/javier-lopez/learn/master/sh/tools/trash">https://rawgit.com/javier-lopez/learn/master/sh/tools/trash</a>)
  $ (cd pkg/trash-pkg-0.1 && cat > <a href="https://www.debian.org/doc/debian-policy/ch-controlfields.html">debian/changelog</a> &lt;&lt;END
 trash-pkg (0.1) $(awk -F"=" '/CODENAME/ {print $2}' /etc/*release); urgency=low
 
@@ -665,7 +665,7 @@ END
         <pre class="prettyprint" data-lang="sh">
  $ sudo apt-get install dh-make
  $ rm -rf pkg; mkdir -p pkg/trash-pkg-0.1
- $ (cd pkg/ && wget <a href="https://rawgit.com/chilicuil/learn/master/sh/tools/trash">https://rawgit.com/chilicuil/learn/master/sh/tools/trash</a>)
+ $ (cd pkg/ && wget <a href="https://rawgit.com/javier-lopez/learn/master/sh/tools/trash">https://rawgit.com/javier-lopez/learn/master/sh/tools/trash</a>)
  $ (cd pkg/ && tar -zcf trash-pkg_0.1.orig.tar.gz trash)
  $ (cd pkg/trash-pkg-0.1 && dh_make --single --packagename trash-pkg)
  $ (cd pkg/trash-pkg-0.1 && rm debian/*.ex debian/*.EX)
@@ -833,7 +833,7 @@ END
  $ sudo apt-get install gdebi unzip
  $ mkdir ~/.bin && export PATH=$PATH:$HOME/.bin
  $ rm -rf pkg; mkdir pkg
- $ (cd pkg && wget $(printf "%s%s" "http://people.ubuntu.com/~chilicuil/" \
+ $ (cd pkg && wget $(printf "%s%s" "http://people.ubuntu.com/~javier-lopez/" \
    "d/zeroinstall-injector_2.3.3-1_$(dpkg --print-architecture).deb"))
  $ (cd pkg/ && sudo gdebi *.deb)
  $ (cd pkg/ && wget <a href="http://git.io/Asto">http://git.io/Asto</a> -O <a href="http://0install.net/interface-spec.html">trash.xml</a> && cat trash.xml)
@@ -929,7 +929,7 @@ END
         </ul>
         <pre class="prettyprint" data-lang="sh">
  $ rm -rf pkg; mkdir pkg
- $ (cd pkg && wget <a href="http://people.ubuntu.com/~chilicuil/d/trash.click">http://people.ubuntu.com/~chilicuil/d/trash.click</a>)
+ $ (cd pkg && wget <a href="http://people.ubuntu.com/~javier-lopez/d/trash.click">http://people.ubuntu.com/~javier-lopez/d/trash.click</a>)
  $ (cd pkg && ar xv trash.click)
  trash.click
  x - debian-binary
@@ -957,7 +957,7 @@ END
         }
     },
     "maintainer": "Javier Lopez",
-    "name": "com.ubuntu.developer.chilicuil.trash",
+    "name": "com.ubuntu.developer.javier-lopez.trash",
     "title": "trash",
     "version": "0.1"
 }
@@ -973,7 +973,7 @@ END
       </hgroup>
       <article class="build">
         <pre class="prettyprint" data-lang="sh">
- $ (cd pkg && wget https://rawgit.com/chilicuil/learn/master/sh/tools/trash)
+ $ (cd pkg && wget https://rawgit.com/javier-lopez/learn/master/sh/tools/trash)
  $ (cd pkg && cat > <a href="http://standards.freedesktop.org/desktop-entry-spec/latest/">trash.desktop</a> &lt;&lt;END
 [Desktop Entry]
 Version=1.0
@@ -988,7 +988,7 @@ END
 )
  $ click build pkg
 WARNING:root:Ignoring missing framework "ubuntu-sdk-14.04"
-Successfully built package in './com.ubuntu.developer.chilicuil.trash_0.1_all.click'.
+Successfully built package in './com.ubuntu.developer.javier-lopez.trash_0.1_all.click'.
         </pre>
       </article>
     </slide>
@@ -1006,7 +1006,7 @@ Successfully built package in './com.ubuntu.developer.chilicuil.trash_0.1_all.cl
    com.ubuntu.developer.$(whoami).trash_0.1_all.click
  $ sudo click list
  $ #el registro se hace a través de un proceso de unity8
- $ sh /opt/click.ubuntu.com/com.ubuntu.developer.chilicuil.trash/0.1/trash -h
+ $ sh /opt/click.ubuntu.com/com.ubuntu.developer.javier-lopez.trash/0.1/trash -h
  $ sudo click unregister --user=$(whoami) com.ubuntu.developer.$(whoami).trash
         </pre>
       </article>
@@ -1018,7 +1018,7 @@ Successfully built package in './com.ubuntu.developer.chilicuil.trash_0.1_all.cl
       </hgroup>
       <article><br/>
       <p class="centered"><b>Javier López - m@javier.io</b></p>
-      <p class="centered"><b>@chilicuil en twitter/irc</b></p><br>
+      <p class="centered"><b>@javier-lopez en twitter/irc</b></p><br>
       <span class="centered">
         <img src="images/contacto.png" style="width:50%" alt="" title="">
       </span>
@@ -1053,7 +1053,7 @@ Successfully built package in './com.ubuntu.developer.chilicuil.trash_0.1_all.cl
         <p>Consulta esta presentación en línea</p>
         <br>
         <ul>
-          <li><a href="http://people.ubuntu.com/~chilicuil/talks/empaquetado-de-software-para-ubuntu/index.html" target="_blank">http://people.ubuntu.com/~chilicuil/talks/empaquetado-de-software-para-ubuntu</a></li>
+          <li><a href="http://people.ubuntu.com/~javier-lopez/talks/empaquetado-de-software-para-ubuntu/index.html" target="_blank">http://people.ubuntu.com/~javier-lopez/talks/empaquetado-de-software-para-ubuntu</a></li>
         </ul>
       </article>
       <p class="auto-fadein" data-config-contact>

@@ -21,9 +21,9 @@ var SLIDE_CONFIG = {
     name: ''
     //company: 'Company',
     //gplus: 'http://plus.google.com/1234567890',
-    //twitter: '@chilicuil',
+    //twitter: '@javier-lopez',
     //www: 'http://javier.io',
-    //github: 'http://github.com/chilicuil'
+    //github: 'http://github.com/javier-lopez'
   }]
 };
 

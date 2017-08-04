@@ -27,11 +27,11 @@ var SLIDE_CONFIG = {
   // Author information
   presenters: [{
     name: 'Javier López',
-    company: 'Ubuntu Community Member<br><a href="http://javier.io">javier.io</a> / <a href="https://launchpad.net/~chilicuil">launchpad.net/~chilicuil</a>',
+    company: 'Ubuntu Community Member<br><a href="http://javier.io">javier.io</a> / <a href="https://launchpad.net/~javier-lopez">launchpad.net/~javier-lopez</a>',
     //gplus: 'http://plus.google.com/1234567890',
-    //twitter: '@chilicuil',
+    //twitter: '@javier-lopez',
     //www: 'http://javier.io',
-    //github: 'http://github.com/chilicuil'
+    //github: 'http://github.com/javier-lopez'
   }/*, {
     name: 'Second Name',
     company: 'Job Title, Google',

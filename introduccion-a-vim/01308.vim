@@ -12,7 +12,7 @@
 
                                         [+] http://got-ravings.blogspot.com
 
-                                        [+] https://github.com/chilicuil/dotfiles/tree/master/.vim
+                                        [+] https://github.com/javier-lopez/dotfiles/tree/master/.vim
 
                                         [+] http://cream.sourceforge.net
 
@@ -20,14 +20,14 @@
 
                                         [+] http://www.oualline.com/vim-cook.html
 
-            
-            
-                                    
+
+
+
                                                                           __
                                                                          /  \           ______________________
                                                                          |  | ° o O   /                       \
                                                                          @  @        |  ¿P r e g u n t a s?    |
                                                                          || ||       |                 :wq!    |
                                                                          || ||        \_______________________/
-                                                                         |\_/|       
+                                                                         |\_/|
                                                                          \___/

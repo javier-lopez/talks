@@ -17,4 +17,4 @@ Spanish
 * [Empaquetado de software en Ubuntu (Ubuntu software packaging)](http://people.ubuntu.com/~javier-lopez/talks/empaquetado-de-software-para-ubuntu/), TelmexHub 2015
 * [Ubuntu y tu (Ubuntu and you)](http://people.ubuntu.com/~javier-lopez/talks/ubuntu-y-tu/), UbuConLa 2016
 * [Shundle, un admon de plugins para la shell (Shundle, a plugin manager for general purpose shells)](http://javier.io/talks/shundle/), UbuConLa 2016
-* [Programación de plugins para Vim (Vim plugin development)](https://github.com/javier-lopez/talks/blob/master/vim-plugins-dev-es.md), VimCDMX 2017
+* [Programación de plugins para Vim (Vim plugin development)](https://asciinema.org/a/132191?t=10), VimCDMX 2017
